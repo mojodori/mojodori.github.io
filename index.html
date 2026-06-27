@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap"
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600&family=Nanum+Gothic:wght@400;700;800&display=swap"
     rel="stylesheet"
   />
 
@@ -115,11 +115,12 @@
     #performance-metrics .section-label { color: #4ADE80; }
 
     .section-heading {
-      font-family: var(--font-display);
+      font-family: 'Nanum Gothic', sans-serif;
       font-size: clamp(1.5rem, 3vw, 2rem);
-      font-weight: 700;
+      font-weight: 800;
       color: var(--color-text);
       margin-bottom: var(--space-xl);
+      letter-spacing: -0.01em;
     }
 
     /* ============================================================
@@ -981,6 +982,82 @@
           </article>
 
         </div><!-- /.projects-grid -->
+
+        <!-- 추가 프로젝트 그리드 -->
+        <div class="projects-grid" style="margin-top: var(--space-lg);">
+
+          <!-- 미니프로젝트 2 -->
+          <article class="project-card">
+            <div class="project-card-header">
+              <span class="project-type">팀 프로젝트 · 3인</span>
+              <span class="project-period">2024.02.02 – 2024.02.08</span>
+            </div>
+            <h3 class="project-title">AWS 클라우드를 이용한 티켓 예매 사이트 구축</h3>
+            <p class="project-desc">
+              글로벌 인프라 기반의 티켓 예매 서비스를 AWS로 설계 및 구축.
+              트래픽 급증 대응을 위한 오토 스케일링과 보안 그룹 설정에 집중.
+            </p>
+            <ul class="project-highlights">
+              <li>CloudFront로 콘텐츠 전송 최적화, 로드밸런서로 트래픽 분산</li>
+              <li>ECS + 오토 스케일링으로 티켓팅 피크 타임 대응 구현</li>
+              <li>CloudFormation으로 VPC 생성, 보안 그룹 설정으로 인프라 보안 강화</li>
+              <li>RDS로 고객·결제·예매 정보 DB 관리, CloudWatch·ElastiCache 추가 구성</li>
+            </ul>
+            <div class="project-tags">
+              <span class="tag">AWS</span>
+              <span class="tag">CloudFront</span>
+              <span class="tag">ECS</span>
+              <span class="tag">Auto Scaling</span>
+              <span class="tag">Load Balancer</span>
+              <span class="tag">RDS</span>
+              <span class="tag">CloudFormation</span>
+              <span class="tag">CloudWatch</span>
+              <span class="tag">ElastiCache</span>
+            </div>
+            <div class="project-links">
+              <a href="https://gifted-elderberry-5d6.notion.site/2-ad219e91985d440684b2823fd788318f" target="_blank" rel="noopener noreferrer" class="project-link">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                Notion
+              </a>
+            </div>
+          </article>
+
+          <!-- 미니프로젝트 3 -->
+          <article class="project-card">
+            <div class="project-card-header">
+              <span class="project-type">팀 프로젝트 · 5인</span>
+              <span class="project-period">2024.03.19 – 2024.03.25</span>
+            </div>
+            <h3 class="project-title">CI/CD 도구를 이용한 개발회사 서버 인프라 구축</h3>
+            <p class="project-desc">
+              Terraform · Ansible · Jenkins를 활용해 인프라 구축 전 과정을 자동화.
+              Shell Script로 .tf 파일을 생성하고 Git으로 팀 작업을 공유하며 진행.
+            </p>
+            <ul class="project-highlights">
+              <li>Shell Script로 Terraform .tf 파일 자동 생성, VPC·서브넷·NAT Gateway·EC2 인프라 코드화</li>
+              <li>Ansible로 개발 및 테스트 환경 자동 세팅, Jenkins 파이프라인으로 빌드 상태 모니터링</li>
+              <li>SonarQube 연동으로 코드 품질 분석 환경 구성</li>
+            </ul>
+            <div class="project-tags">
+              <span class="tag">Terraform</span>
+              <span class="tag">Ansible</span>
+              <span class="tag">Jenkins</span>
+              <span class="tag">Shell Script</span>
+              <span class="tag">AWS</span>
+              <span class="tag">VPC</span>
+              <span class="tag">EC2</span>
+              <span class="tag">SonarQube</span>
+              <span class="tag">Git</span>
+            </div>
+            <div class="project-links">
+              <a href="https://gifted-elderberry-5d6.notion.site/3-5211ffac858a4d85b0610fc0206abce8" target="_blank" rel="noopener noreferrer" class="project-link">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                Notion
+              </a>
+            </div>
+          </article>
+
+        </div>
       </div>
     </section>
 
