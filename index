@@ -1,0 +1,2150 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="최시은 보안 엔지니어 포트폴리오 - 네트워크 보안, Linux, Python" />
+  <meta property="og:title" content="최시은 | Security Engineer Portfolio" />
+  <meta property="og:description" content="비전공에서 시작한 실전형 보안 인재" />
+  <title>최시은 | Security Portfolio</title>
+
+  <!-- Google Fonts: JetBrains Mono + Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600&family=Nanum+Gothic:wght@400;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    /* ============================================================
+       DESIGN TOKENS — Astra-inspired Dark Portfolio
+       섹션별 배경 톤: 짝수=살짝 밝은 surface / 홀수=base bg
+       ============================================================ */
+    :root {
+      /* Base palette */
+      --color-bg:          #0D1117;
+      --color-bg-alt:      #111827;   /* 짝수 섹션 배경 (약간 블루 틴트) */
+      --color-bg-accent:   #0F1E2E;   /* skills 섹션 — 딥 네이비 */
+      --color-bg-metrics:  #0A1A0F;   /* credentials 섹션 — 딥 그린 틴트 */
+      --color-bg-about:    #18121E;   /* about 섹션 — 딥 퍼플 틴트 */
+      --color-bg-contact:  #111827;   /* contact 섹션 */
+      --color-surface:     #1C2333;
+      --color-surface-2:   #222D3A;
+      --color-border:      #2A3547;
+      --color-border-soft: #1E2A38;
+      --color-accent:      #00E676;   /* Astra-ish green — 조금 더 자연스러운 그린 */
+      --color-accent-dim:  #00C864;
+      --color-accent-glow: rgba(0, 230, 118, 0.12);
+      --color-blue:        #58A6FF;   /* 보조 강조색 */
+      --color-purple:      #BC8CFF;   /* about 섹션 포인트 */
+      --color-text:        #E6EDF3;
+      --color-muted:       #8B949E;
+      --color-muted-2:     #6B7890;
+
+      --font-display: 'JetBrains Mono', monospace;
+      --font-body:    'Inter', sans-serif;
+
+      --space-xs:  4px;
+      --space-sm:  8px;
+      --space-md:  16px;
+      --space-lg:  24px;
+      --space-xl:  48px;
+      --space-2xl: 80px;
+
+      --max-width: 1100px;
+      --radius:    10px;
+      --radius-sm: 6px;
+    }
+
+    /* ============================================================
+       RESET & BASE
+       ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    .wrapper {
+      max-width: var(--max-width);
+      margin-inline: auto;
+      padding-inline: var(--space-lg);
+    }
+
+    .section { padding-block: var(--space-2xl); }
+
+    /* ============================================================
+       섹션별 배경 톤 — Astra 교차 패턴
+       ============================================================ */
+    #hero          { background: var(--color-bg); }
+    #skills        { background: var(--color-bg-accent); }
+    #projects      { background: var(--color-bg-alt); }
+    #performance-metrics { background: var(--color-bg-metrics); }
+    #about         { background: var(--color-bg-about); }
+    #contact       { background: var(--color-bg-contact); }
+
+    /* 섹션 사이 경계선 제거 (배경색으로 구분) */
+    .section + .section { border-top: none; }
+
+    /* ============================================================
+       SECTION LABEL & HEADING
+       ============================================================ */
+    .section-label {
+      font-family: var(--font-display);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: var(--space-sm);
+    }
+
+    /* about 섹션은 퍼플 포인트 */
+    #about .section-label { color: var(--color-purple); }
+    #about .timeline-year { color: var(--color-purple); }
+    #about .timeline-content::before { background: var(--color-purple); }
+
+    /* credentials 섹션은 그린 유지하되 약간 밝게 */
+    #performance-metrics .section-label { color: #4ADE80; }
+
+    .section-heading {
+      font-family: 'Nanum Gothic', sans-serif;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 800;
+      color: var(--color-text);
+      margin-bottom: var(--space-xl);
+      letter-spacing: -0.01em;
+    }
+
+    /* ============================================================
+       PLACEHOLDER
+       ============================================================ */
+    .placeholder {
+      background: var(--color-surface);
+      border: 1px dashed var(--color-border);
+      border-radius: var(--radius);
+      padding: var(--space-xl);
+      color: var(--color-muted);
+      font-family: var(--font-display);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    /* ============================================================
+       NAV
+       ============================================================ */
+    #nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(13, 17, 23, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--color-border-soft);
+    }
+
+    #nav nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-block: 14px;
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--color-text);
+      letter-spacing: 0.04em;
+    }
+
+    .nav-logo span { color: var(--color-accent); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: var(--space-lg);
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font-display);
+      font-size: 12px;
+      color: var(--color-muted);
+      letter-spacing: 0.06em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--color-accent); }
+
+    @media (max-width: 600px) {
+      .nav-links .nav-text { display: none; }
+    }
+
+    /* ============================================================
+       HERO
+       ============================================================ */
+    #hero {
+      min-height: 88vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* 배경 그리드 패턴 — 사이버 감성 */
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--color-border-soft) 1px, transparent 1px),
+        linear-gradient(90deg, var(--color-border-soft) 1px, transparent 1px);
+      background-size: 48px 48px;
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    #hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0; right: 0;
+      height: 120px;
+      background: linear-gradient(to bottom, transparent, var(--color-bg));
+      pointer-events: none;
+    }
+
+    #hero .wrapper { position: relative; z-index: 1; }
+
+    .hero-eyebrow {
+      font-family: var(--font-display);
+      font-size: 12px;
+      color: var(--color-accent);
+      letter-spacing: 0.1em;
+      margin-bottom: var(--space-md);
+      opacity: 0.9;
+    }
+
+    .hero-name {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      font-weight: 700;
+      color: var(--color-text);
+      line-height: 1.05;
+      margin-bottom: var(--space-md);
+      letter-spacing: -0.02em;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 2.5vw, 1.35rem);
+      color: var(--color-muted);
+      margin-bottom: var(--space-lg);
+      line-height: 1.5;
+    }
+
+    .hero-title strong { color: var(--color-accent); }
+
+    .hero-desc {
+      font-size: 15px;
+      color: var(--color-muted);
+      max-width: 520px;
+      line-height: 1.8;
+      margin-bottom: var(--space-xl);
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: var(--space-md);
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      font-family: var(--font-display);
+      font-size: 13px;
+      padding: 11px 22px;
+      border-radius: var(--radius-sm);
+      background: var(--color-accent);
+      color: #0A1A0A;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      transition: background 0.2s, box-shadow 0.2s;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 0 20px var(--color-accent-glow);
+    }
+
+    .btn-primary:hover {
+      background: var(--color-accent-dim);
+      box-shadow: 0 0 32px rgba(0,230,118,0.25);
+    }
+
+    .btn-secondary {
+      font-family: var(--font-display);
+      font-size: 13px;
+      padding: 11px 22px;
+      border-radius: var(--radius-sm);
+      background: transparent;
+      color: var(--color-muted);
+      border: 1px solid var(--color-border);
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .btn-secondary:hover {
+      color: var(--color-accent);
+      border-color: var(--color-accent);
+    }
+
+    /* ============================================================
+       SKILLS
+       ============================================================ */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: var(--space-lg);
+    }
+
+    .skills-group {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--color-border-soft);
+      border-radius: var(--radius);
+      padding: var(--space-lg);
+    }
+
+    .skills-group-title {
+      font-family: var(--font-display);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-blue);
+      margin-bottom: var(--space-md);
+    }
+
+    .skills-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+    }
+
+    .skill-badge {
+      font-family: var(--font-display);
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      background: rgba(88,166,255,0.08);
+      color: var(--color-text);
+      border: 1px solid rgba(88,166,255,0.2);
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .skill-badge:hover {
+      background: rgba(88,166,255,0.15);
+      border-color: rgba(88,166,255,0.4);
+    }
+
+    /* ============================================================
+       PROJECTS
+       ============================================================ */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-lg);
+    }
+
+    @media (max-width: 700px) {
+      .projects-grid { grid-template-columns: 1fr; }
+    }
+
+    .project-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .project-card:hover {
+      border-color: rgba(0,230,118,0.4);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    }
+
+    .project-card--placeholder {
+      min-height: 200px;
+      justify-content: center;
+    }
+
+    .project-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+    }
+
+    .project-type {
+      font-family: var(--font-display);
+      font-size: 11px;
+      color: var(--color-accent);
+      letter-spacing: 0.06em;
+    }
+
+    .project-period {
+      font-family: var(--font-display);
+      font-size: 11px;
+      color: var(--color-muted);
+    }
+
+    .project-title {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--color-text);
+      line-height: 1.4;
+    }
+
+    .project-desc {
+      font-size: 14px;
+      color: var(--color-muted);
+      line-height: 1.6;
+    }
+
+    .project-desc strong { color: var(--color-text); }
+
+    .project-highlights {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .project-highlights li {
+      font-size: 13px;
+      color: var(--color-text);
+      padding-left: 16px;
+      position: relative;
+      line-height: 1.5;
+    }
+
+    .project-highlights li::before {
+      content: '▸';
+      color: var(--color-accent);
+      position: absolute;
+      left: 0;
+      font-size: 11px;
+      top: 2px;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+      margin-top: auto;
+    }
+
+    .tag {
+      font-family: var(--font-display);
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: rgba(0,230,118,0.07);
+      color: var(--color-accent);
+      border: 1px solid rgba(0,230,118,0.2);
+    }
+
+    .project-links {
+      display: flex;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+    }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--font-display);
+      font-size: 12px;
+      color: var(--color-muted);
+      border: 1px solid var(--color-border);
+      border-radius: 4px;
+      padding: 4px 10px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .project-link:hover {
+      color: var(--color-accent);
+      border-color: var(--color-accent);
+    }
+
+    /* ============================================================
+       PERFORMANCE METRICS
+       ============================================================ */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-lg);
+    }
+
+    .metrics-group {
+      background: rgba(74, 222, 128, 0.04);
+      border: 1px solid rgba(74,222,128,0.15);
+      border-radius: var(--radius);
+      padding: var(--space-lg);
+    }
+
+    .metrics-group-title {
+      font-family: var(--font-display);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #4ADE80;
+      margin-bottom: var(--space-md);
+    }
+
+    .metrics-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    .metrics-list li {
+      display: grid;
+      grid-template-columns: 16px 1fr auto;
+      align-items: center;
+      gap: var(--space-sm);
+      font-size: 14px;
+      color: var(--color-text);
+      line-height: 1.5;
+      padding: 6px 0;
+    }
+
+    .metrics-list li::before {
+      content: '▸';
+      color: #4ADE80;
+      font-size: 12px;
+      margin-top: 2px;
+    }
+
+    .metrics-list .meta {
+      font-family: var(--font-display);
+      font-size: 11px;
+      color: var(--color-muted);
+      white-space: nowrap;
+      padding-top: 2px;
+    }
+
+    .metrics-list .badge-active {
+      display: inline-block;
+      font-family: var(--font-display);
+      font-size: 10px;
+      padding: 1px 7px;
+      border-radius: 4px;
+      background: rgba(74,222,128,0.12);
+      color: #4ADE80;
+      border: 1px solid rgba(74,222,128,0.3);
+      white-space: nowrap;
+    }
+
+    .metrics-list .badge-progress {
+      display: inline-block;
+      font-family: var(--font-display);
+      font-size: 10px;
+      padding: 1px 7px;
+      border-radius: 4px;
+      background: rgba(251,191,36,0.12);
+      color: #FBBF24;
+      border: 1px solid rgba(251,191,36,0.3);
+      white-space: nowrap;
+    }
+
+    /* ============================================================
+       ABOUT
+       ============================================================ */
+    .about-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-2xl);
+      align-items: start;
+    }
+
+    @media (max-width: 700px) {
+      .about-layout { grid-template-columns: 1fr; gap: var(--space-xl); }
+    }
+
+    .about-desc {
+      font-size: 15px;
+      color: var(--color-muted);
+      line-height: 1.8;
+    }
+
+    .about-desc p + p { margin-top: var(--space-md); }
+    .about-desc strong { color: var(--color-text); }
+
+    .timeline { display: flex; flex-direction: column; gap: 0; }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 60px 1fr;
+      gap: var(--space-md);
+      padding-bottom: var(--space-lg);
+    }
+
+    .timeline-item:last-child { padding-bottom: 0; }
+
+    .timeline-year {
+      font-family: var(--font-display);
+      font-size: 11px;
+      color: var(--color-purple);
+      padding-top: 3px;
+      text-align: right;
+    }
+
+    .timeline-content {
+      padding-left: var(--space-md);
+      border-left: 1px solid rgba(188,140,255,0.25);
+      position: relative;
+    }
+
+    .timeline-content::before {
+      content: '';
+      position: absolute;
+      left: -5px;
+      top: 6px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--color-purple);
+      box-shadow: 0 0 8px rgba(188,140,255,0.5);
+    }
+
+    .timeline-event {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: 2px;
+    }
+
+    .timeline-sub {
+      font-size: 12px;
+      color: var(--color-muted);
+    }
+
+    /* ============================================================
+       CONTACT
+       ============================================================ */
+    .contact-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-md);
+    }
+
+    .contact-item {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      font-family: var(--font-display);
+      font-size: 13px;
+      color: var(--color-muted);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: 12px 18px;
+      background: var(--color-surface);
+      transition: color 0.2s, border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .contact-item:hover {
+      color: var(--color-accent);
+      border-color: var(--color-accent);
+      box-shadow: 0 0 16px var(--color-accent-glow);
+    }
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
+    #footer {
+      background: var(--color-bg);
+      border-top: 1px solid var(--color-border-soft);
+      padding-block: var(--space-lg);
+    }
+
+    #footer .wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+
+    .footer-copy {
+      font-family: var(--font-display);
+      font-size: 12px;
+      color: var(--color-muted-2);
+    }
+
+    .footer-top {
+      font-family: var(--font-display);
+      font-size: 12px;
+      color: var(--color-muted-2);
+      transition: color 0.2s;
+    }
+
+    .footer-top:hover { color: var(--color-accent); }
+
+    /* ============================================================
+       PROJECT CARDS — 새 디자인
+       ============================================================ */
+    .pj-card {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: box-shadow 0.3s;
+    }
+
+    .pj-header {
+      background: linear-gradient(135deg, #1a1f2e 0%, #161b22 100%);
+      border-bottom: 1px solid #30363d;
+      padding: 24px 28px 20px;
+    }
+
+    .pj-meta {
+      font-size: 11px;
+      color: #8b949e;
+      font-family: monospace;
+      letter-spacing: 0.08em;
+    }
+
+    .pj-title {
+      margin: 0 0 6px;
+      font-size: 20px;
+      font-weight: 700;
+      color: #e6edf3;
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+      font-family: 'Nanum Gothic', sans-serif;
+    }
+
+    .pj-desc {
+      margin: 0 0 16px;
+      font-size: 13px;
+      color: #8b949e;
+      line-height: 1.55;
+    }
+
+    .pj-role-badge {
+      padding: 3px 10px;
+      border-radius: 4px;
+      font-size: 11px;
+      background: rgba(88,166,255,0.1);
+      color: #58a6ff;
+      border: 1px solid rgba(88,166,255,0.3);
+      font-family: monospace;
+      font-weight: 600;
+    }
+
+    .pj-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+
+    .pj-tag {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-family: monospace;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .pj-tag.green { background: rgba(63,185,80,0.12); color: #3fb950; border: 1px solid rgba(63,185,80,0.3); }
+    .pj-tag.orange { background: rgba(255,153,0,0.12); color: #FF9900; border: 1px solid rgba(255,153,0,0.3); }
+    .pj-tag.blue { background: rgba(88,166,255,0.12); color: #58a6ff; border: 1px solid rgba(88,166,255,0.3); }
+
+    .pj-toggle {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: none;
+      padding: 12px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      color: #8b949e;
+      font-size: 12px;
+      font-family: monospace;
+      letter-spacing: 0.04em;
+      transition: background 0.2s;
+    }
+
+    .pj-toggle:hover { background: rgba(255,255,255,0.03); }
+
+    .pj-body { padding: 24px 28px; border-top: 1px solid #30363d; }
+
+    .pj-section-label {
+      font-size: 11px;
+      font-family: monospace;
+      color: #FF9900;
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+
+    .pj-pipeline {
+      background: #0d1117;
+      border-radius: 8px;
+      border: 1px solid #21262d;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .pj-pipe-step {
+      font-size: 12px;
+      font-family: monospace;
+      color: #6e7681;
+      padding: 6px 10px;
+      border-radius: 4px;
+      border: 1px solid #21262d;
+      transition: all 0.35s;
+    }
+
+    .pj-pipe-step.active {
+      color: #3fb950;
+      border-color: rgba(63,185,80,0.4);
+      background: rgba(63,185,80,0.07);
+    }
+
+    .pj-metric {
+      background: transparent;
+      border-radius: 8px;
+      padding: 14px 16px;
+      flex: 1;
+      min-width: 130px;
+    }
+
+    .pj-metric.green { background: rgba(63,185,80,0.05); border: 1px solid rgba(63,185,80,0.2); }
+    .pj-metric.orange { background: rgba(255,153,0,0.05); border: 1px solid rgba(255,153,0,0.2); }
+
+    .pj-metric-label { font-size: 11px; color: #8b949e; margin-bottom: 6px; font-family: monospace; }
+    .pj-metric-val { font-size: 22px; font-weight: 700; font-family: monospace; }
+    .pj-metric-val.green { color: #3fb950; }
+    .pj-metric-val.orange { color: #FF9900; }
+    .pj-metric-unit { font-size: 14px; color: #8b949e; margin-left: 2px; }
+    .pj-metric-sub { font-size: 11px; color: #8b949e; margin-left: 4px; }
+
+    .pj-asis-tobe {
+      background: #0d1117;
+      border-radius: 8px;
+      border: 1px solid #21262d;
+      padding: 14px 16px;
+      font-size: 12px;
+      color: #8b949e;
+      line-height: 1.75;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .pj-tag-asis { color: #f85149; font-family: monospace; margin-right: 6px; }
+    .pj-tag-tobe { color: #3fb950; font-family: monospace; margin-right: 6px; }
+    .pj-tag-result { font-family: monospace; margin-right: 6px; }
+    .pj-tag-result.green { color: #3fb950; }
+    .pj-tag-result.orange { color: #FF9900; }
+
+    .pj-toggle-item {
+      border-left: 2px solid rgba(255,153,0,0.3);
+      padding-left: 12px;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+
+    .pj-toggle-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: #c9d1d9;
+      font-weight: 500;
+    }
+
+    .pj-arrow { font-size: 11px; font-family: monospace; transition: transform 0.2s; }
+    .pj-arrow.green { color: #3fb950; }
+    .pj-arrow.orange { color: #FF9900; }
+    .pj-arrow.blue { color: #58a6ff; }
+
+    .pj-detail-list {
+      margin: 8px 0 0 16px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .pj-detail-list li {
+      font-size: 12px;
+      color: #8b949e;
+      line-height: 1.7;
+      padding-left: 10px;
+      position: relative;
+    }
+
+    .pj-detail-list li::before {
+      content: '·';
+      position: absolute;
+      left: 0;
+      color: #3fb950;
+      font-family: monospace;
+    }
+
+    .pj-detail-text {
+      font-size: 12px;
+      color: #8b949e;
+      line-height: 1.65;
+      margin: 8px 0 0 16px;
+    }
+
+    .pj-retrospect {
+      font-size: 12px;
+      color: #8b949e;
+      line-height: 1.75;
+      margin: 0;
+    }
+
+    .pj-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+
+    .pj-link {
+      display: inline-flex;
+      align-items: center;
+      padding: 7px 14px;
+      border-radius: 6px;
+      border: 1px solid #30363d;
+      background: #21262d;
+      color: #c9d1d9;
+      font-size: 12px;
+      text-decoration: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .pj-link.green:hover { border-color: #3fb950; background: rgba(63,185,80,0.08); }
+    .pj-link.orange:hover { border-color: #FF9900; background: rgba(255,153,0,0.08); }
+    .pj-link.blue:hover { border-color: #58a6ff; background: rgba(88,166,255,0.08); }
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 32px;
+      height: 32px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      z-index: 200;
+    }
+
+    .nav-hamburger span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background: var(--color-text);
+      border-radius: 2px;
+      transition: transform 0.25s, opacity 0.25s;
+      transform-origin: center;
+    }
+
+    /* 열린 상태 — X 모양 */
+    .nav-hamburger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.is-open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    @media (max-width: 600px) {
+      .nav-hamburger { display: flex; }
+
+      .nav-links {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(13,17,23,0.97);
+        backdrop-filter: blur(16px);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 32px;
+        z-index: 150;
+      }
+
+      .nav-links.is-open { display: flex; }
+
+      .nav-links a {
+        font-size: 18px;
+        letter-spacing: 0.1em;
+      }
+
+      /* 모바일에서 nav-text 다시 표시 */
+      .nav-links .nav-text { display: block; }
+    }
+
+    /* ============================================================
+       SCROLL FADE-IN 애니메이션
+       ============================================================ */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+
+    .fade-in.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* 딜레이 유틸 */
+    .fade-delay-1 { transition-delay: 0.1s; }
+    .fade-delay-2 { transition-delay: 0.2s; }
+    .fade-delay-3 { transition-delay: 0.3s; }
+    .fade-delay-4 { transition-delay: 0.4s; }
+
+    /* prefers-reduced-motion 대응 */
+    @media (prefers-reduced-motion: reduce) {
+      .fade-in { opacity: 1; transform: none; transition: none; }
+    }
+
+    /* ============================================================
+       COPY TOAST — 이메일 복사 완료 알림
+       ============================================================ */
+    .copy-toast {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%) translateY(12px);
+      background: var(--color-accent);
+      color: #0A1A0A;
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 10px 20px;
+      border-radius: var(--radius-sm);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s, transform 0.2s;
+      z-index: 999;
+      white-space: nowrap;
+    }
+
+    .copy-toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ============================================================
+       NAV — #nav
+       역할: 페이지 상단 고정 네비게이션. 섹션 앵커 링크 + GitHub 바로가기
+       ============================================================ -->
+  <header id="nav">
+    <nav class="wrapper">
+      <a href="#hero" class="nav-logo">최시은<span>.</span></a>
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#skills" class="nav-text">Skills</a></li>
+        <li><a href="#projects" class="nav-text">Projects</a></li>
+        <li><a href="#performance-metrics" class="nav-text">Credentials</a></li>
+        <li><a href="#about" class="nav-text">About</a></li>
+        <li><a href="#contact" class="nav-text">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+
+  <main>
+
+    <!-- ============================================================
+         HERO — #hero
+         역할: 첫 인상. 이름 · 직무 타이틀 · 포지셔닝 문구 · 소셜 링크
+         채용 담당자가 0~10초 내에 "누구"를 파악하는 구역
+         ============================================================ -->
+    <section id="hero" class="section">
+      <div class="wrapper">
+        <p class="hero-eyebrow fade-in">// Security Engineer · Security Consultant</p>
+        <h1 class="hero-name fade-in fade-delay-1">최시은</h1>
+        <p class="hero-title fade-in fade-delay-2">
+          <strong>보안이 설정된</strong> 네트워크만이 안전하다
+        </p>
+        <p class="hero-desc fade-in fade-delay-3">
+          클라우드 인프라 구축에서 출발해 보안의 필요성을 직접 깨달은 엔지니어입니다.
+          네트워크·시스템·클라우드를 아우르는 실전 경험을 바탕으로
+          안전한 환경을 설계하고 지킵니다.
+        </p>
+        <div class="hero-cta fade-in fade-delay-4">
+          <a href="#contact" class="btn-primary">연락하기</a>
+          <a href="#projects" class="btn-secondary">프로젝트 보기</a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         SKILLS — #skills
+         역할: 보유 기술 스택을 카테고리별 배지로 시각화
+         JD 키워드와 빠른 매칭을 돕는 구역
+         ============================================================ -->
+    <section id="skills" class="section">
+      <div class="wrapper">
+        <p class="section-label fade-in">Tech Stack</p>
+        <h2 class="section-heading fade-in fade-delay-1">핵심 역량</h2>
+        <div class="skills-grid fade-in fade-delay-2">
+
+          <div class="skills-group">
+            <p class="skills-group-title">시스템 · Linux</p>
+            <div class="skills-badges">
+              <span class="skill-badge">Linux</span>
+              <span class="skill-badge">VMware</span>
+              <span class="skill-badge">Ubuntu</span>
+              <span class="skill-badge">Bash</span>
+            </div>
+          </div>
+
+          <div class="skills-group">
+            <p class="skills-group-title">네트워크 보안</p>
+            <div class="skills-badges">
+              <span class="skill-badge">OSI 7계층</span>
+              <span class="skill-badge">TCP/IP</span>
+              <span class="skill-badge">Wireshark</span>
+              <span class="skill-badge">SNMP</span>
+              <span class="skill-badge">SSL/TLS</span>
+              <span class="skill-badge">Route 53</span>
+            </div>
+          </div>
+
+          <div class="skills-group">
+            <p class="skills-group-title">보안 도구 · SIEM</p>
+            <div class="skills-badges">
+              <span class="skill-badge">Suricata IDS</span>
+              <span class="skill-badge">ELK Stack</span>
+              <span class="skill-badge">Kibana</span>
+              <span class="skill-badge">Filebeat</span>
+              <span class="skill-badge">Logstash</span>
+              <span class="skill-badge">OpenVPN</span>
+              <span class="skill-badge">Nmap</span>
+              <span class="skill-badge">Nikto</span>
+            </div>
+          </div>
+
+          <div class="skills-group">
+            <p class="skills-group-title">클라우드 · 인프라</p>
+            <div class="skills-badges">
+              <span class="skill-badge">AWS</span>
+              <span class="skill-badge">Kubernetes</span>
+              <span class="skill-badge">Docker</span>
+              <span class="skill-badge">Ansible</span>
+              <span class="skill-badge">Terraform</span>
+              <span class="skill-badge">Grafana</span>
+              <span class="skill-badge">Prometheus</span>
+              <span class="skill-badge">CI/CD</span>
+            </div>
+          </div>
+
+          <div class="skills-group">
+            <p class="skills-group-title">프로그래밍 · DB</p>
+            <div class="skills-badges">
+              <span class="skill-badge">Python</span>
+              <span class="skill-badge">SQL</span>
+              <span class="skill-badge">MySQL</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         PROJECTS — #projects
+         역할: 실제 구현 경험을 카드 형태로 제시
+         ============================================================ -->
+    <section id="projects" class="section">
+      <div class="wrapper">
+        <p class="section-label fade-in">// Projects</p>
+        <h2 class="section-heading fade-in fade-delay-1">프로젝트</h2>
+        <p style="font-size:14px;color:var(--color-muted);line-height:1.6;max-width:480px;margin-bottom:48px;" class="fade-in fade-delay-2">
+          클라우드 인프라 설계부터 CI/CD 자동화, 모니터링까지 —<br>실무 협업 환경에서 직접 구축하고 운영한 프로젝트들입니다.
+        </p>
+
+        <div style="display:flex;flex-direction:column;gap:20px;" class="fade-in fade-delay-3">
+
+          <!-- ── 프로젝트 1: GYMFIT ── -->
+          <div class="pj-card" id="pj-gymfit">
+            <div class="pj-header">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+                <span style="width:8px;height:8px;border-radius:50%;background:#3fb950;box-shadow:0 0 8px #3fb95099;display:inline-block;"></span>
+                <span class="pj-meta">2024.03.26 – 05.03 · 팀 프로젝트 4인 · 인프라팀</span>
+              </div>
+              <h3 class="pj-title">클라우드 환경 웹 서비스 구축 및 배포<br><span style="color:#3fb950;">GYMFIT 통합 플랫폼 인프라</span></h3>
+              <p class="pj-desc">헬스장 운영 및 헬스 용품 쇼핑 원스탑 플랫폼 GYMFIT의 클라우드 인프라 구축 — Java 개발팀과 실무 협업 구조로 Terraform IaC, Kubernetes 클러스터, Jenkins CI/CD, Grafana 모니터링을 포함한 풀스택 인프라 파이프라인 설계 및 운영</p>
+              <div style="margin-bottom:12px;"><span class="pj-role-badge">🎯 나의 역할 · 모니터링 서버 구축 + K6 성능 테스트 + Kubernetes 클러스터</span></div>
+              <div class="pj-tags">
+                <span class="pj-tag green">Kubernetes</span><span class="pj-tag green">Terraform</span><span class="pj-tag green">Ansible</span><span class="pj-tag green">Jenkins</span><span class="pj-tag green">Docker</span><span class="pj-tag green">AWS EC2</span><span class="pj-tag green">Route 53</span><span class="pj-tag green">ACM</span><span class="pj-tag green">Grafana</span><span class="pj-tag green">Prometheus</span><span class="pj-tag green">K6</span>
+              </div>
+            </div>
+            <button class="pj-toggle" onclick="togglePj('gymfit-body', this, '#3fb950')">
+              <span>▸ 성과 및 구축 내용 보기</span><span style="color:#3fb950;">+</span>
+            </button>
+            <div id="gymfit-body" class="pj-body" style="display:none;">
+
+              <div class="pj-section-label">// AWS 아키텍처 다이어그램</div>
+              <div style="background:#0d1117;border:1px solid #21262d;border-radius:10px;padding:20px;margin-bottom:20px;overflow-x:auto;">
+                <svg viewBox="0 0 780 380" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:780px;min-width:580px;display:block;margin:0 auto;">
+                  <defs>
+                    <marker id="garrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                      <path d="M0,0 L0,6 L8,3 z" fill="#3fb950"/>
+                    </marker>
+                    <marker id="oarrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                      <path d="M0,0 L0,6 L8,3 z" fill="#FF9900"/>
+                    </marker>
+                    <marker id="barrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                      <path d="M0,0 L0,6 L8,3 z" fill="#58a6ff"/>
+                    </marker>
+                    <marker id="garrow2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                      <path d="M0,0 L0,6 L8,3 z" fill="#30363d"/>
+                    </marker>
+                  </defs>
+
+                  <rect width="780" height="380" fill="#0d1117" rx="8"/>
+                  <text x="390" y="20" fill="#8b949e" font-family="monospace" font-size="10" text-anchor="middle">GYMFIT · AWS Cloud Architecture · 2024.03 ~ 05</text>
+
+                  <!-- AWS VPC 외곽선 -->
+                  <rect x="20" y="30" width="740" height="320" rx="10" fill="none" stroke="#FF9900" stroke-width="1" stroke-dasharray="6,3" opacity="0.5"/>
+                  <text x="36" y="48" fill="#FF9900" font-family="monospace" font-size="9" opacity="0.8">AWS VPC</text>
+
+                  <!-- 인터넷 -->
+                  <rect x="320" y="35" width="120" height="34" rx="6" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+                  <text x="380" y="52" fill="#8b949e" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">🌐 Internet</text>
+                  <text x="380" y="63" fill="#6b7890" font-family="monospace" font-size="8" text-anchor="middle">GitHub · 개발팀</text>
+
+                  <!-- 인터넷→Route53 -->
+                  <line x1="380" y1="69" x2="380" y2="88" stroke="#30363d" stroke-width="1" marker-end="url(#garrow2)"/>
+
+                  <!-- Route 53 -->
+                  <rect x="310" y="88" width="140" height="34" rx="6" fill="#161b22" stroke="#FF9900" stroke-width="1.5"/>
+                  <text x="380" y="105" fill="#FF9900" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">🔗 Route 53</text>
+                  <text x="380" y="116" fill="#6b7890" font-family="monospace" font-size="8" text-anchor="middle">gymfit.site · DNS 관리</text>
+
+                  <!-- Route53→ACM+ALB -->
+                  <line x1="380" y1="122" x2="380" y2="140" stroke="#FF9900" stroke-width="1.5" marker-end="url(#oarrow)"/>
+
+                  <!-- ACM -->
+                  <rect x="160" y="140" width="120" height="34" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="1.5"/>
+                  <text x="220" y="157" fill="#3fb950" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">🔐 ACM</text>
+                  <text x="220" y="168" fill="#6b7890" font-family="monospace" font-size="8" text-anchor="middle">SSL/TLS 인증서</text>
+
+                  <!-- ALB -->
+                  <rect x="310" y="140" width="140" height="34" rx="6" fill="#161b22" stroke="#FF9900" stroke-width="1.5"/>
+                  <text x="380" y="157" fill="#FF9900" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">⚖️ ALB</text>
+                  <text x="380" y="168" fill="#6b7890" font-family="monospace" font-size="8" text-anchor="middle">HTTP→HTTPS 리디렉션</text>
+
+                  <!-- ACM→ALB -->
+                  <line x1="280" y1="157" x2="310" y2="157" stroke="#3fb950" stroke-width="1" marker-end="url(#garrow)" stroke-dasharray="3,2"/>
+
+                  <!-- ALB→K8s -->
+                  <line x1="380" y1="174" x2="380" y2="192" stroke="#FF9900" stroke-width="1.5" marker-end="url(#oarrow)"/>
+
+                  <!-- Kubernetes Cluster 박스 -->
+                  <rect x="90" y="192" width="540" height="100" rx="8" fill="#111828" stroke="#58a6ff" stroke-width="1.5" stroke-dasharray="5,3"/>
+                  <text x="200" y="210" fill="#58a6ff" font-family="monospace" font-size="9" opacity="0.9">Kubernetes Cluster (AWS EC2)</text>
+
+                  <!-- K8s 내부 Pod들 -->
+                  <rect x="110" y="216" width="100" height="60" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="1"/>
+                  <text x="160" y="238" fill="#3fb950" font-family="monospace" font-size="9" font-weight="bold" text-anchor="middle">📦 App Pod</text>
+                  <text x="160" y="252" fill="#6b7890" font-family="monospace" font-size="8" text-anchor="middle">HPA · x3</text>
+                  <text x="160" y="265" fill="#6b7890" font-family="monospace" font-size="7" text-anchor="middle">Java Spring</text>
+
+                  <rect x="230" y="216" width="100" height="60" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="1"/>
+                  <text x="280" y="238" fill="#3fb950" font-family="monospace" font-size="9" font-weight="bold" text-anchor="middle">📊 Grafana</text>
+                  <text x="280" y="252" fill="#6b7890" font-family="monospace" font-size="8" text-anchor="middle">모니터링</text>
+                  <text x="280" y="265" fill="#6b7890" font-family="monospace" font-size="7" text-anchor="middle">+Prometheus</text>
+
+                  <rect x="350" y="216" width="100" height="60" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="1"/>
+                  <text x="400" y="238" fill="#3fb950" font-family="monospace" font-size="9" font-weight="bold" text-anchor="middle">🔧 Jenkins</text>
+                  <text x="400" y="252" fill="#6b7890" font-family="monospace" font-size="8" text-anchor="middle">CI/CD</text>
+                  <text x="400" y="265" fill="#6b7890" font-family="monospace" font-size="7" text-anchor="middle">자동 배포</text>
+
+                  <rect x="470" y="216" width="140" height="60" rx="6" fill="#161b22" stroke="#e3b341" stroke-width="1"/>
+                  <text x="540" y="235" fill="#e3b341" font-family="monospace" font-size="9" font-weight="bold" text-anchor="middle">⚡ K6 성능테스트</text>
+                  <text x="540" y="249" fill="#6b7890" font-family="monospace" font-size="8" text-anchor="middle">부하 테스트 시나리오</text>
+                  <text x="540" y="262" fill="#3fb950" font-family="monospace" font-size="7" text-anchor="middle">HPA 최적 레플리카 산정</text>
+                  <text x="540" y="273" fill="#6b7890" font-family="monospace" font-size="7" text-anchor="middle">응답시간 측정</text>
+
+                  <!-- K8s→RDS -->
+                  <line x1="210" y1="292" x2="210" y2="318" stroke="#3fb950" stroke-width="1.5" marker-end="url(#garrow)"/>
+
+                  <!-- IaC 박스 -->
+                  <rect x="500" y="310" width="220" height="50" rx="8" fill="#161b22" stroke="#FF9900" stroke-width="1.5"/>
+                  <text x="610" y="330" fill="#FF9900" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">🏗️ IaC (Terraform + Ansible)</text>
+                  <text x="610" y="345" fill="#6b7890" font-family="monospace" font-size="8" text-anchor="middle">VPC · EC2 · SG · 환경 자동화</text>
+                  <text x="610" y="356" fill="#6b7890" font-family="monospace" font-size="7" text-anchor="middle">인프라 재현성 100% 확보</text>
+
+                  <!-- RDS -->
+                  <rect x="100" y="318" width="180" height="44" rx="6" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/>
+                  <text x="190" y="338" fill="#58a6ff" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">🗄️ AWS RDS</text>
+                  <text x="190" y="352" fill="#6b7890" font-family="monospace" font-size="8" text-anchor="middle">MySQL · Multi-AZ</text>
+
+                  <!-- 결과 배지 -->
+                  <rect x="300" y="318" width="180" height="44" rx="6" fill="#0e2018" stroke="#3fb950" stroke-width="1"/>
+                  <text x="390" y="336" fill="#3fb950" font-family="monospace" font-size="9" font-weight="bold" text-anchor="middle">✅ 주요 성과</text>
+                  <text x="390" y="350" fill="#8b949e" font-family="monospace" font-size="8" text-anchor="middle">배포 시간 85% 단축 · 3분</text>
+                  <text x="390" y="362" fill="#8b949e" font-family="monospace" font-size="7" text-anchor="middle">HPA 레플리카 3개 최적 산정</text>
+                </svg>
+              </div>
+
+              <div class="pj-section-label">// 배포 파이프라인</div>
+              <div class="pj-pipeline" id="gymfit-pipeline">
+                <div class="pj-pipe-step" data-idx="0">01 Terraform</div>
+                <div class="pj-pipe-step" data-idx="1">02 Ansible</div>
+                <div class="pj-pipe-step" data-idx="2">03 Kubernetes Cluster</div>
+                <div class="pj-pipe-step" data-idx="3">04 Jenkins CI/CD</div>
+                <div class="pj-pipe-step" data-idx="4">05 Grafana Monitoring</div>
+              </div>
+
+              <div class="pj-section-label" style="margin-top:24px;">// K6 성능 테스트 결과</div>
+              <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">
+                <div class="pj-metric green">
+                  <div class="pj-metric-label">Pod HPA 최적 레플리카</div>
+                  <div><span class="pj-metric-val green" data-target="3">3</span><span class="pj-metric-unit">개</span> <span class="pj-metric-sub">테스트 기반 산정</span></div>
+                </div>
+                <div class="pj-metric green">
+                  <div class="pj-metric-label">배포 자동화 소요 시간</div>
+                  <div><span class="pj-metric-val green" data-target="3">3</span><span class="pj-metric-unit">분</span> <span class="pj-metric-sub">수동 대비 -85%</span></div>
+                </div>
+              </div>
+              <div class="pj-asis-tobe">
+                <div><span class="pj-tag-asis">AS-IS</span> 단일 서버 수동 배포 환경, 트래픽 급증 시 스케일링 불가, 장애 감지 체계 부재</div>
+                <div><span class="pj-tag-tobe">TO-BE</span> Kubernetes HPA 기반 자동 스케일링, Jenkins CI/CD 배포 자동화, Grafana + Prometheus 실시간 모니터링으로 장애 조기 감지 체계 구축</div>
+                <div><span class="pj-tag-result green">결과</span> K6 부하 테스트 데이터 기반 <strong style="color:#e6edf3;">최적 레플리카 수 산정</strong>, IaC(Terraform + Ansible)로 <strong style="color:#e6edf3;">인프라 재현성 100% 확보</strong>, HTTPS 보안 접속 전환 완료</div>
+              </div>
+
+              <div style="margin-top:24px;">
+                <div class="pj-section-label">// 구축 내용</div>
+                <div class="pj-toggle-item" onclick="toggleDetail(this)">
+                  <div class="pj-toggle-row"><span class="pj-arrow green">▸</span><span>로드밸런서를 통한 HTTPS 보안 접속</span></div>
+                  <ul class="pj-detail-list" style="display:none;">
+                    <li>Route 53으로 도메인(www.gymfit.site) 등록 및 DNS 관리</li>
+                    <li>AWS Certificate Manager(ACM)로 SSL/TLS 인증서 발급</li>
+                    <li>HTTP(80) → HTTPS(443) 자동 리디렉션 설정으로 보안 강화</li>
+                    <li>ALB 리스너 규칙을 통한 트래픽 분산 및 암호화 통신 보장</li>
+                  </ul>
+                </div>
+                <div class="pj-toggle-item" onclick="toggleDetail(this)">
+                  <div class="pj-toggle-row"><span class="pj-arrow green">▸</span><span>Kubernetes Cluster 기반 모니터링 + 성능 테스트</span></div>
+                  <ul class="pj-detail-list" style="display:none;">
+                    <li>고가용성 Kubernetes 클러스터에 Grafana + Prometheus 스택 구축</li>
+                    <li>K6 부하 테스트 시나리오 작성 → 웹 서비스 성능 객관적 데이터 확보</li>
+                    <li>Grafana 대시보드로 성능 테스트 과정·결과 실시간 시각화</li>
+                    <li>테스트 결과 기반 Pod HPA 레플리카 수 최적 산정</li>
+                  </ul>
+                </div>
+                <div class="pj-toggle-item" onclick="toggleDetail(this)">
+                  <div class="pj-toggle-row"><span class="pj-arrow green">▸</span><span>Terraform + Ansible IaC 기반 인프라 자동화</span></div>
+                  <ul class="pj-detail-list" style="display:none;">
+                    <li>Terraform으로 AWS 리소스(VPC, EC2, Security Group 등) 코드화</li>
+                    <li>Ansible Playbook으로 서버 환경 설정 자동화 및 재현성 확보</li>
+                    <li>인프라 변경 이력을 코드로 관리하여 팀 협업 효율 향상</li>
+                  </ul>
+                </div>
+                <div class="pj-toggle-item" onclick="toggleDetail(this)">
+                  <div class="pj-toggle-row"><span class="pj-arrow green">▸</span><span>Jenkins CI/CD 파이프라인 구축</span></div>
+                  <ul class="pj-detail-list" style="display:none;">
+                    <li>GitHub → Jenkins → Docker Build → Kubernetes 배포 파이프라인 구성</li>
+                    <li>개발팀 코드 푸시 시 자동 빌드·테스트·배포 사이클 구현</li>
+                    <li>배포 실패 시 자동 롤백 처리로 서비스 안정성 확보</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div style="margin-top:24px;">
+                <div class="pj-section-label">// 회고</div>
+                <p class="pj-retrospect">약 5주간 Java 개발팀과 실무 협업 구조로 진행한 프로젝트로, <span style="color:#c9d1d9;">사전 일정 계획의 중요성</span>을 체감했습니다. K6 성능 테스트를 통해 감이 아닌 <span style="color:#c9d1d9;">데이터 기반으로 인프라를 결정</span>하는 경험을 쌓았고, Terraform으로 인프라를 코드화하며 재현성과 협업 효율을 높이는 IaC의 실질적인 가치를 직접 확인할 수 있었습니다.</p>
+              </div>
+
+              <div class="pj-links">
+                <a href="https://github.com/GymFit-Dev" target="_blank" rel="noopener noreferrer" class="pj-link green">💻 GitHub (GymFit-Dev)</a>
+                <a href="https://youtu.be/u6YDD2Xq7wA" target="_blank" rel="noopener noreferrer" class="pj-link green">📺 Demo Video</a>
+                <a href="https://gifted-elderberry-5d6.notion.site/631a61602a6b41cb9ca1e9128af852fb" target="_blank" rel="noopener noreferrer" class="pj-link green">📓 Notion</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── 프로젝트 2: 티켓 예매 ── -->
+          <div class="pj-card" id="pj-ticket">
+            <div class="pj-header">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+                <span style="width:8px;height:8px;border-radius:50%;background:#FF9900;box-shadow:0 0 8px #FF990099;display:inline-block;"></span>
+                <span class="pj-meta">2024.02.02 – 02.08 · 팀 프로젝트 3인</span>
+              </div>
+              <h3 class="pj-title">AWS 클라우드 기반<br><span style="color:#FF9900;">티켓 예매 사이트 인프라 구축</span></h3>
+              <p class="pj-desc">고트래픽 티켓 예매 서비스를 위한 클라우드 네이티브 인프라 설계 및 구축 — CloudFront CDN, ALB 기반 로드밸런싱, ECS 오토스케일링을 통해 트래픽 급증 상황에서도 안정적인 서비스를 제공하는 AWS 아키텍처 구현</p>
+              <div style="margin-bottom:12px;"><span class="pj-role-badge">🎯 나의 역할 · 인프라 설계 참여 + PPT 발표자료 총괄</span></div>
+              <div class="pj-tags">
+                <span class="pj-tag orange">AWS EC2</span><span class="pj-tag orange">AWS RDS</span><span class="pj-tag orange">AWS ECS</span><span class="pj-tag orange">CloudFront</span><span class="pj-tag orange">ALB</span><span class="pj-tag orange">Auto Scaling</span><span class="pj-tag orange">VPC</span><span class="pj-tag orange">CloudFormation</span><span class="pj-tag orange">CloudWatch</span>
+              </div>
+            </div>
+            <button class="pj-toggle" onclick="togglePj('ticket-body', this, '#FF9900')">
+              <span>▸ 성과 및 트러블슈팅 보기</span><span style="color:#FF9900;">+</span>
+            </button>
+            <div id="ticket-body" class="pj-body" style="display:none;">
+
+              <div class="pj-section-label">// AWS 아키텍처 다이어그램</div>
+              <div style="background:#0d1117;border:1px solid #21262d;border-radius:10px;padding:20px;margin-bottom:20px;overflow-x:auto;">
+                <svg viewBox="0 0 780 340" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:780px;min-width:580px;display:block;margin:0 auto;">
+                  <defs>
+                    <marker id="oa2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                      <path d="M0,0 L0,6 L8,3 z" fill="#FF9900"/>
+                    </marker>
+                    <marker id="ga2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                      <path d="M0,0 L0,6 L8,3 z" fill="#3fb950"/>
+                    </marker>
+                    <marker id="ba2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                      <path d="M0,0 L0,6 L8,3 z" fill="#58a6ff"/>
+                    </marker>
+                    <marker id="da2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                      <path d="M0,0 L0,6 L8,3 z" fill="#30363d"/>
+                    </marker>
+                  </defs>
+
+                  <rect width="780" height="340" fill="#0d1117" rx="8"/>
+                  <text x="390" y="20" fill="#8b949e" font-family="monospace" font-size="10" text-anchor="middle">티켓 예매 사이트 · AWS Cloud Architecture · 2024.02</text>
+
+                  <!-- AWS VPC 외곽 -->
+                  <rect x="20" y="30" width="740" height="290" rx="10" fill="none" stroke="#FF9900" stroke-width="1" stroke-dasharray="6,3" opacity="0.4"/>
+                  <text x="36" y="48" fill="#FF9900" font-family="monospace" font-size="9" opacity="0.7">AWS VPC</text>
+
+                  <!-- 사용자 -->
+                  <rect x="320" y="35" width="120" height="34" rx="6" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+                  <text x="380" y="52" fill="#8b949e" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">👥 사용자</text>
+                  <text x="380" y="63" fill="#6b7890" font-family="monospace" font-size="8" text-anchor="middle">티켓 예매 트래픽</text>
+
+                  <!-- 사용자→CloudFront -->
+                  <line x1="380" y1="69" x2="380" y2="88" stroke="#FF9900" stroke-width="1.5" marker-end="url(#oa2)"/>
+
+                  <!-- CloudFront -->
+                  <rect x="270" y="88" width="220" height="34" rx="6" fill="#161b22" stroke="#FF9900" stroke-width="2"/>
+                  <text x="380" y="105" fill="#FF9900" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">☁️ CloudFront CDN</text>
+                  <text x="380" y="116" fill="#6b7890" font-family="monospace" font-size="8" text-anchor="middle">정적 자산 캐싱 · Cache-Control · Invalidation</text>
+
+                  <!-- CloudFront→ALB -->
+                  <line x1="380" y1="122" x2="380" y2="140" stroke="#FF9900" stroke-width="1.5" marker-end="url(#oa2)"/>
+                  <text x="390" y="135" fill="#6b7890" font-family="monospace" font-size="7">동적 요청</text>
+
+                  <!-- ALB -->
+                  <rect x="270" y="140" width="220" height="34" rx="6" fill="#161b22" stroke="#FF9900" stroke-width="1.5"/>
+                  <text x="380" y="157" fill="#FF9900" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">⚖️ ALB (로드밸런서)</text>
+                  <text x="380" y="168" fill="#6b7890" font-family="monospace" font-size="8" text-anchor="middle">트래픽 분산 · Target Group</text>
+
+                  <!-- ALB→ECS -->
+                  <line x1="380" y1="174" x2="380" y2="192" stroke="#FF9900" stroke-width="1.5" marker-end="url(#oa2)"/>
+
+                  <!-- ECS Auto Scaling 박스 -->
+                  <rect x="80" y="192" width="540" height="80" rx="8" fill="#111828" stroke="#58a6ff" stroke-width="1.5" stroke-dasharray="5,3"/>
+                  <text x="200" y="210" fill="#58a6ff" font-family="monospace" font-size="9">ECS (Auto Scaling)</text>
+
+                  <!-- ECS 컨테이너들 -->
+                  <rect x="100" y="215" width="120" height="44" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="1"/>
+                  <text x="160" y="235" fill="#3fb950" font-family="monospace" font-size="9" font-weight="bold" text-anchor="middle">🐳 Container 1</text>
+                  <text x="160" y="248" fill="#6b7890" font-family="monospace" font-size="7" text-anchor="middle">티켓 예매 앱</text>
+                  <text x="160" y="258" fill="#6b7890" font-family="monospace" font-size="7" text-anchor="middle">Launch Template</text>
+
+                  <rect x="240" y="215" width="120" height="44" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="1"/>
+                  <text x="300" y="235" fill="#3fb950" font-family="monospace" font-size="9" font-weight="bold" text-anchor="middle">🐳 Container 2</text>
+                  <text x="300" y="248" fill="#6b7890" font-family="monospace" font-size="7" text-anchor="middle">오토스케일링</text>
+                  <text x="300" y="258" fill="#6b7890" font-family="monospace" font-size="7" text-anchor="middle">트래픽 급증 대응</text>
+
+                  <rect x="380" y="215" width="120" height="44" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="1"/>
+                  <text x="440" y="235" fill="#3fb950" font-family="monospace" font-size="9" font-weight="bold" text-anchor="middle">🐳 Container 3</text>
+                  <text x="440" y="248" fill="#6b7890" font-family="monospace" font-size="7" text-anchor="middle">자동 확장</text>
+                  <text x="440" y="258" fill="#6b7890" font-family="monospace" font-size="7" text-anchor="middle">ALB 자동 등록</text>
+
+                  <!-- CloudWatch -->
+                  <rect x="520" y="215" width="90" height="44" rx="6" fill="#161b22" stroke="#e3b341" stroke-width="1"/>
+                  <text x="565" y="235" fill="#e3b341" font-family="monospace" font-size="9" font-weight="bold" text-anchor="middle">📈 CW</text>
+                  <text x="565" y="248" fill="#6b7890" font-family="monospace" font-size="7" text-anchor="middle">Cloud</text>
+                  <text x="565" y="258" fill="#6b7890" font-family="monospace" font-size="7" text-anchor="middle">Watch</text>
+
+                  <!-- ECS→RDS -->
+                  <line x1="300" y1="272" x2="300" y2="295" stroke="#3fb950" stroke-width="1.5" marker-end="url(#ga2)"/>
+
+                  <!-- RDS -->
+                  <rect x="80" y="295" width="180" height="34" rx="6" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/>
+                  <text x="170" y="312" fill="#58a6ff" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">🗄️ RDS (MySQL)</text>
+                  <text x="170" y="323" fill="#6b7890" font-family="monospace" font-size="8" text-anchor="middle">인덱스 최적화 · 쿼리 튜닝</text>
+
+                  <!-- CloudFormation -->
+                  <rect x="280" y="295" width="160" height="34" rx="6" fill="#161b22" stroke="#FF9900" stroke-width="1.5"/>
+                  <text x="360" y="312" fill="#FF9900" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">📋 CloudFormation</text>
+                  <text x="360" y="323" fill="#6b7890" font-family="monospace" font-size="8" text-anchor="middle">IaC · 인프라 코드화</text>
+
+                  <!-- 성과 박스 -->
+                  <rect x="460" y="295" width="180" height="34" rx="6" fill="#2a1a0a" stroke="#FF9900" stroke-width="1"/>
+                  <text x="550" y="309" fill="#FF9900" font-family="monospace" font-size="9" font-weight="bold" text-anchor="middle">✅ 성과</text>
+                  <text x="550" y="321" fill="#8b949e" font-family="monospace" font-size="7" text-anchor="middle">응답시간 80%↓ · 리소스 40%↓</text>
+
+                  <!-- 보안그룹 표시 -->
+                  <rect x="650" y="140" width="110" height="80" rx="6" fill="#161b22" stroke="#f85149" stroke-width="1"/>
+                  <text x="705" y="158" fill="#f85149" font-family="monospace" font-size="9" font-weight="bold" text-anchor="middle">🔒 Security</text>
+                  <text x="705" y="170" fill="#f85149" font-family="monospace" font-size="9" font-weight="bold" text-anchor="middle">Group</text>
+                  <text x="705" y="185" fill="#6b7890" font-family="monospace" font-size="7" text-anchor="middle">Web: 80,443</text>
+                  <text x="705" y="196" fill="#6b7890" font-family="monospace" font-size="7" text-anchor="middle">WAS: 8080</text>
+                  <text x="705" y="207" fill="#6b7890" font-family="monospace" font-size="7" text-anchor="middle">DB: 3306</text>
+                  <text x="705" y="218" fill="#6b7890" font-family="monospace" font-size="7" text-anchor="middle">계층별 정의</text>
+                </svg>
+              </div>
+
+              <div class="pj-section-label">// 주요 성과</div>
+              <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">
+                <div class="pj-metric orange">
+                  <div class="pj-metric-label">응답 시간</div>
+                  <div><span style="font-size:13px;color:#6e7681;text-decoration:line-through;margin-right:6px;">5.0s</span><span class="pj-metric-val orange">0.5</span><span class="pj-metric-unit">s</span></div>
+                </div>
+                <div class="pj-metric orange">
+                  <div class="pj-metric-label">서버 리소스 사용량</div>
+                  <div><span style="font-size:13px;color:#6e7681;text-decoration:line-through;margin-right:6px;">100%</span><span class="pj-metric-val orange">60</span><span class="pj-metric-unit">%</span></div>
+                </div>
+              </div>
+              <div class="pj-asis-tobe">
+                <div><span class="pj-tag-asis">AS-IS</span> 단순 CRUD 로직에 인덱스 미적용, 단일 EC2 인스턴스로 트래픽 급증 시 응답 지연 발생 (최대 5초)</div>
+                <div><span class="pj-tag-tobe">TO-BE</span> CloudFront CDN 도입으로 정적 자산 캐싱, ALB + ECS 오토스케일링으로 트래픽 분산, RDS 최적화 및 CloudWatch 기반 모니터링 구축</div>
+                <div><span class="pj-tag-result orange">결과</span> 응답 시간 <strong style="color:#e6edf3;">80% 단축</strong>(5.0s → 0.5s), 서버 리소스 사용량 <strong style="color:#e6edf3;">40% 절감</strong></div>
+              </div>
+
+              <div style="margin-top:24px;">
+                <div class="pj-section-label">// 트러블슈팅</div>
+                <div class="pj-toggle-item" onclick="toggleDetail(this)">
+                  <div class="pj-toggle-row"><span class="pj-arrow orange">▸</span><span>보안 그룹 포트 연결 오류로 서비스 간 통신 불가</span></div>
+                  <p class="pj-detail-text" style="display:none;">Inbound/Outbound 규칙을 계층별(Web→WAS→DB)로 명시적 정의하고, 각 티어 간 허용 포트(80, 8080, 3306)를 보안 그룹 ID 참조 방식으로 재설정하여 해결.</p>
+                </div>
+                <div class="pj-toggle-item" onclick="toggleDetail(this)">
+                  <div class="pj-toggle-row"><span class="pj-arrow orange">▸</span><span>오토 스케일링 트리거 후 신규 인스턴스가 ALB에 미등록</span></div>
+                  <p class="pj-detail-text" style="display:none;">ECS 서비스의 Target Group 연결 설정 누락 확인 후, Launch Template 내 user-data 스크립트에 ALB 등록 로직 추가하여 해결.</p>
+                </div>
+                <div class="pj-toggle-item" onclick="toggleDetail(this)">
+                  <div class="pj-toggle-row"><span class="pj-arrow orange">▸</span><span>CloudFront 캐시로 인한 콘텐츠 갱신 지연</span></div>
+                  <p class="pj-detail-text" style="display:none;">배포 시 Invalidation API를 활용한 캐시 무효화 자동화 스크립트 적용 및 Cache-Control 헤더 정책 조정.</p>
+                </div>
+              </div>
+
+              <div style="margin-top:24px;">
+                <div class="pj-section-label">// 회고</div>
+                <p class="pj-retrospect">단순히 버튼을 따라 누르는 것을 넘어 <span style="color:#c9d1d9;">"왜 이렇게 설계해야 하는가"</span>에 집중했습니다. 보안 그룹 계층 구조, 로드밸런서와 오토스케일링의 연동 원리를 직접 디버깅하며 이해했고, PPT 발표 총괄을 맡아 아키텍처의 설계 의도를 팀 외부에 효과적으로 전달했습니다.</p>
+              </div>
+
+              <div class="pj-links">
+                <a href="https://ssalgaga.tistory.com/145" target="_blank" rel="noopener noreferrer" class="pj-link orange">📓 회고록 블로그</a>
+                <a href="https://gifted-elderberry-5d6.notion.site/2-ad219e91985d440684b2823fd788318f" target="_blank" rel="noopener noreferrer" class="pj-link orange">📓 Notion</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── 프로젝트 3: 보안 홈랩 ── -->
+          <div class="pj-card" id="pj-homelab">
+            <div class="pj-header">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+                <span style="width:8px;height:8px;border-radius:50%;background:#58a6ff;box-shadow:0 0 8px #58a6ff99;display:inline-block;"></span>
+                <span class="pj-meta">2026.06 – 진행중 · 개인 프로젝트 · macOS M2 · VMware Fusion 13</span>
+              </div>
+              <h3 class="pj-title">VMware 기반 보안 홈랩 구축<br><span style="color:#58a6ff;">침입탐지 · SIEM · 모의해킹 통합 환경</span></h3>
+              <p class="pj-desc">macOS M2 환경에서 VMware Fusion 13을 활용해 10대의 Ubuntu VM으로 구성된 보안 실습 홈랩 구축 — Suricata IDS 침입탐지, ELK Stack SIEM 로그 분석, DVWA 취약점 실습, Kali Linux 모의해킹 시나리오까지 공격-탐지-분석 전체 사이클 직접 구현</p>
+              <div style="margin-bottom:12px;"><span class="pj-role-badge" style="background:rgba(88,166,255,0.1);color:#58a6ff;border-color:rgba(88,166,255,0.3);">🎯 역할 · 설계 / 구축 / 운영 전담 (1인)</span></div>
+              <div class="pj-tags">
+                <span class="pj-tag blue">Suricata IDS</span>
+                <span class="pj-tag blue">ELK Stack</span>
+                <span class="pj-tag blue">Kibana</span>
+                <span class="pj-tag blue">Filebeat</span>
+                <span class="pj-tag blue">Logstash</span>
+                <span class="pj-tag blue">MariaDB</span>
+                <span class="pj-tag blue">Nginx</span>
+                <span class="pj-tag blue">OpenVPN</span>
+                <span class="pj-tag blue">DVWA</span>
+                <span class="pj-tag blue">Kali Linux</span>
+                <span class="pj-tag blue">Jenkins</span>
+                <span class="pj-tag blue">VMware</span>
+              </div>
+            </div>
+            <button class="pj-toggle" onclick="togglePj('homelab-body', this, '#58a6ff')">
+              <span>▸ 구성 및 구축 내용 보기</span><span style="color:#58a6ff;">+</span>
+            </button>
+            <div id="homelab-body" class="pj-body" style="display:none;">
+
+              <div class="pj-section-label">// 네트워크 토폴로지</div>
+
+              <!-- 네트워크 토폴로지 SVG -->
+              <div style="background:#0d1117;border:1px solid #21262d;border-radius:10px;padding:20px;margin-bottom:20px;overflow-x:auto;">
+                <svg viewBox="0 0 780 420" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:780px;min-width:600px;display:block;margin:0 auto;">
+                  <defs>
+                    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                      <path d="M0,0 L0,6 L8,3 z" fill="#30363d"/>
+                    </marker>
+                    <marker id="arrow-blue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                      <path d="M0,0 L0,6 L8,3 z" fill="#58a6ff"/>
+                    </marker>
+                    <marker id="arrow-green" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                      <path d="M0,0 L0,6 L8,3 z" fill="#3fb950"/>
+                    </marker>
+                    <marker id="arrow-red" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                      <path d="M0,0 L0,6 L8,3 z" fill="#f85149"/>
+                    </marker>
+                  </defs>
+
+                  <!-- 배경 -->
+                  <rect width="780" height="420" fill="#0d1117" rx="8"/>
+
+                  <!-- 타이틀 -->
+                  <text x="390" y="22" fill="#8b949e" font-family="monospace" font-size="11" text-anchor="middle">VMware Fusion 13 · macOS M2 · NAT Network (172.16.60.0/24)</text>
+
+                  <!-- ── macOS 호스트 ── -->
+                  <rect x="300" y="32" width="180" height="44" rx="8" fill="#161b22" stroke="#30d158" stroke-width="1.5"/>
+                  <text x="390" y="52" fill="#30d158" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">💻 macOS M2 (호스트)</text>
+                  <text x="390" y="68" fill="#6b7890" font-family="monospace" font-size="9" text-anchor="middle">VMware Fusion 13 · GNS3</text>
+
+                  <!-- 맥→Bastion 화살표 -->
+                  <line x1="390" y1="76" x2="390" y2="100" stroke="#30d158" stroke-width="1.5" marker-end="url(#arrow-green)" stroke-dasharray="4,3"/>
+                  <text x="398" y="92" fill="#6b7890" font-family="monospace" font-size="8">Bridged SSH</text>
+
+                  <!-- ── Bastion ── -->
+                  <rect x="300" y="100" width="180" height="44" rx="8" fill="#161b22" stroke="#56d364" stroke-width="2"/>
+                  <text x="390" y="120" fill="#56d364" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">🚪 Bastion Host</text>
+                  <text x="390" y="136" fill="#6b7890" font-family="monospace" font-size="9" text-anchor="middle">192.168.0.30 · SSH ProxyJump</text>
+
+                  <!-- Bastion→나머지 연결선 -->
+                  <!-- 왼쪽: OpenVPN -->
+                  <line x1="300" y1="122" x2="180" y2="122" stroke="#30363d" stroke-width="1" marker-end="url(#arrow)"/>
+                  <!-- 오른쪽: Suricata -->
+                  <line x1="480" y1="122" x2="600" y2="122" stroke="#30363d" stroke-width="1" marker-end="url(#arrow)"/>
+                  <!-- 아래 중앙: NAT 네트워크 -->
+                  <line x1="390" y1="144" x2="390" y2="168" stroke="#30363d" stroke-width="1" marker-end="url(#arrow)"/>
+
+                  <!-- NAT 네트워크 라인 -->
+                  <rect x="40" y="168" width="700" height="2" rx="1" fill="#2d3a6b" opacity="0.8"/>
+                  <text x="390" y="183" fill="#2d3a6b" font-family="monospace" font-size="9" text-anchor="middle">─────────────── NAT Network · 172.16.60.0/24 ───────────────</text>
+
+                  <!-- ── OpenVPN ── -->
+                  <rect x="20" y="100" width="140" height="44" rx="8" fill="#161b22" stroke="#d2a8ff" stroke-width="1.5"/>
+                  <text x="90" y="120" fill="#d2a8ff" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">🔒 OpenVPN</text>
+                  <text x="90" y="136" fill="#6b7890" font-family="monospace" font-size="8" text-anchor="middle">172.16.60.131</text>
+
+                  <!-- ── Suricata ── -->
+                  <rect x="620" y="100" width="140" height="44" rx="8" fill="#161b22" stroke="#ffa657" stroke-width="1.5"/>
+                  <text x="690" y="120" fill="#ffa657" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">🕵️ Suricata IDS</text>
+                  <text x="690" y="136" fill="#6b7890" font-family="monospace" font-size="8" text-anchor="middle">172.16.60.135 · eve.json</text>
+
+                  <!-- NAT→각 VM 연결 -->
+                  <line x1="90" y1="185" x2="90" y2="144" stroke="#30363d" stroke-width="1"/>
+                  <line x1="690" y1="185" x2="690" y2="144" stroke="#30363d" stroke-width="1"/>
+
+                  <!-- ── WEB ── -->
+                  <line x1="200" y1="185" x2="200" y2="200" stroke="#30363d" stroke-width="1" marker-end="url(#arrow)"/>
+                  <rect x="130" y="200" width="140" height="44" rx="8" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/>
+                  <text x="200" y="220" fill="#58a6ff" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">🌐 WEB (Nginx)</text>
+                  <text x="200" y="236" fill="#6b7890" font-family="monospace" font-size="8" text-anchor="middle">172.16.60.132 · HTTPS</text>
+
+                  <!-- WEB→WAS -->
+                  <line x1="270" y1="222" x2="310" y2="222" stroke="#58a6ff" stroke-width="1" marker-end="url(#arrow-blue)" stroke-dasharray="3,2"/>
+                  <text x="290" y="218" fill="#6b7890" font-family="monospace" font-size="7">proxy</text>
+
+                  <!-- ── WAS/DVWA ── -->
+                  <line x1="390" y1="185" x2="390" y2="200" stroke="#30363d" stroke-width="1" marker-end="url(#arrow)"/>
+                  <rect x="310" y="200" width="160" height="44" rx="8" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/>
+                  <text x="390" y="220" fill="#58a6ff" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">⚙️ WAS · DVWA</text>
+                  <text x="390" y="236" fill="#6b7890" font-family="monospace" font-size="8" text-anchor="middle">172.16.60.134 · Apache+PHP</text>
+
+                  <!-- WAS→DB -->
+                  <line x1="470" y1="222" x2="510" y2="222" stroke="#3fb950" stroke-width="1" marker-end="url(#arrow-green)" stroke-dasharray="3,2"/>
+                  <text x="490" y="218" fill="#6b7890" font-family="monospace" font-size="7">3306</text>
+
+                  <!-- ── DB ── -->
+                  <line x1="580" y1="185" x2="580" y2="200" stroke="#30363d" stroke-width="1" marker-end="url(#arrow)"/>
+                  <rect x="510" y="200" width="140" height="44" rx="8" fill="#161b22" stroke="#3fb950" stroke-width="1.5"/>
+                  <text x="580" y="220" fill="#3fb950" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">🗄️ MariaDB</text>
+                  <text x="580" y="236" fill="#6b7890" font-family="monospace" font-size="8" text-anchor="middle">172.16.60.133 · homelab_db</text>
+
+                  <!-- ── SIEM ── -->
+                  <line x1="390" y1="260" x2="390" y2="280" stroke="#d2a8ff" stroke-width="1.5" marker-end="url(#arrow)"/>
+                  <text x="450" y="274" fill="#d2a8ff" font-family="monospace" font-size="8">Filebeat→Logstash</text>
+                  <rect x="270" y="280" width="240" height="54" rx="8" fill="#161b22" stroke="#d2a8ff" stroke-width="1.5"/>
+                  <text x="390" y="300" fill="#d2a8ff" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">📊 SIEM · ELK Stack</text>
+                  <text x="390" y="315" fill="#6b7890" font-family="monospace" font-size="8" text-anchor="middle">172.16.60.136 · ES+Logstash+Kibana</text>
+                  <text x="390" y="328" fill="#3fb950" font-family="monospace" font-size="8" text-anchor="middle">2,009 alerts 탐지 · Kibana 대시보드</text>
+
+                  <!-- Suricata→SIEM -->
+                  <line x1="690" y1="144" x2="690" y2="270" stroke="#ffa657" stroke-width="1" stroke-dasharray="4,3"/>
+                  <line x1="690" y1="270" x2="510" y2="307" stroke="#ffa657" stroke-width="1" marker-end="url(#arrow)" stroke-dasharray="4,3"/>
+
+                  <!-- DB→SIEM (Logstash INSERT) -->
+                  <line x1="580" y1="244" x2="580" y2="265" stroke="#3fb950" stroke-width="1" stroke-dasharray="3,2"/>
+                  <line x1="580" y1="265" x2="470" y2="295" stroke="#3fb950" stroke-width="1" marker-end="url(#arrow-green)" stroke-dasharray="3,2"/>
+
+                  <!-- ── Kali ── -->
+                  <rect x="20" y="280" width="130" height="44" rx="8" fill="#161b22" stroke="#f85149" stroke-width="1.5"/>
+                  <text x="85" y="300" fill="#f85149" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">⚔️ Kali Linux</text>
+                  <text x="85" y="316" fill="#6b7890" font-family="monospace" font-size="8" text-anchor="middle">172.16.60.138</text>
+                  <!-- Kali 공격 화살표 -->
+                  <line x1="150" y1="302" x2="200" y2="244" stroke="#f85149" stroke-width="1.5" marker-end="url(#arrow-red)" stroke-dasharray="4,3"/>
+                  <text x="155" y="278" fill="#f85149" font-family="monospace" font-size="8">공격</text>
+
+                  <!-- ── Jenkins ── -->
+                  <rect x="20" y="355" width="130" height="44" rx="8" fill="#161b22" stroke="#e3b341" stroke-width="1.5"/>
+                  <text x="85" y="375" fill="#e3b341" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">🔧 Jenkins</text>
+                  <text x="85" y="391" fill="#6b7890" font-family="monospace" font-size="8" text-anchor="middle">172.16.60.139 · CI/CD</text>
+
+                  <!-- ── Portfolio ── -->
+                  <rect x="630" y="280" width="130" height="44" rx="8" fill="#161b22" stroke="#30d158" stroke-width="1.5"/>
+                  <text x="695" y="300" fill="#30d158" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">🗂️ Portfolio</text>
+                  <text x="695" y="316" fill="#6b7890" font-family="monospace" font-size="8" text-anchor="middle">172.16.60.140 · Nginx</text>
+
+                  <!-- 범례 -->
+                  <rect x="270" y="355" width="240" height="55" rx="6" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+                  <text x="390" y="372" fill="#6b7890" font-family="monospace" font-size="9" text-anchor="middle">── 범례 ──</text>
+                  <line x1="285" y1="384" x2="305" y2="384" stroke="#58a6ff" stroke-width="1.5"/>
+                  <text x="310" y="387" fill="#8b949e" font-family="monospace" font-size="8">리버스 프록시</text>
+                  <line x1="370" y1="384" x2="390" y2="384" stroke="#3fb950" stroke-width="1.5"/>
+                  <text x="395" y="387" fill="#8b949e" font-family="monospace" font-size="8">DB 연결</text>
+                  <line x1="285" y1="400" x2="305" y2="400" stroke="#f85149" stroke-width="1.5" stroke-dasharray="4,2"/>
+                  <text x="310" y="403" fill="#8b949e" font-family="monospace" font-size="8">모의해킹 공격</text>
+                  <line x1="370" y1="400" x2="390" y2="400" stroke="#ffa657" stroke-width="1.5" stroke-dasharray="4,2"/>
+                  <text x="395" y="403" fill="#8b949e" font-family="monospace" font-size="8">로그 파이프라인</text>
+                </svg>
+              </div>
+
+              <div class="pj-section-label">// 홈랩 구성 (10 VM)</div>
+              <div class="pj-pipeline" id="homelab-pipeline" style="margin-bottom:20px;">
+                <div class="pj-pipe-step active" style="color:#58a6ff;border-color:rgba(88,166,255,0.4);background:rgba(88,166,255,0.07);">Bastion Host (SSH 점프서버) · 192.168.0.30</div>
+                <div class="pj-pipe-step active" style="color:#58a6ff;border-color:rgba(88,166,255,0.4);background:rgba(88,166,255,0.07);">OpenVPN · WEB(Nginx) · WAS(DVWA) · DB(MariaDB)</div>
+                <div class="pj-pipe-step active" style="color:#58a6ff;border-color:rgba(88,166,255,0.4);background:rgba(88,166,255,0.07);">Suricata IDS · ELK SIEM · Kali Linux · Jenkins · Portfolio</div>
+              </div>
+
+              <div class="pj-section-label">// 데이터 파이프라인</div>
+              <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:20px;padding:14px 16px;background:#0d1117;border-radius:8px;border:1px solid #21262d;">
+                <span style="font-size:12px;font-family:monospace;color:#58a6ff;">Suricata</span>
+                <span style="color:#30363d;font-family:monospace;">→</span>
+                <span style="font-size:12px;font-family:monospace;color:#8b949e;">eve.json</span>
+                <span style="color:#30363d;font-family:monospace;">→</span>
+                <span style="font-size:12px;font-family:monospace;color:#58a6ff;">Filebeat</span>
+                <span style="color:#30363d;font-family:monospace;">→</span>
+                <span style="font-size:12px;font-family:monospace;color:#58a6ff;">Logstash</span>
+                <span style="color:#30363d;font-family:monospace;">→</span>
+                <span style="font-size:12px;font-family:monospace;color:#3fb950;">MariaDB</span>
+                <span style="color:#30363d;font-family:monospace;">+</span>
+                <span style="font-size:12px;font-family:monospace;color:#3fb950;">Elasticsearch</span>
+                <span style="color:#30363d;font-family:monospace;">→</span>
+                <span style="font-size:12px;font-family:monospace;color:#3fb950;">Kibana 시각화</span>
+              </div>
+
+              <div class="pj-section-label">// 주요 성과</div>
+              <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;">
+                <div class="pj-metric" style="background:rgba(88,166,255,0.05);border:1px solid rgba(88,166,255,0.2);">
+                  <div class="pj-metric-label">Suricata 탐지 alert</div>
+                  <div><span class="pj-metric-val" style="color:#58a6ff;">2,009</span><span class="pj-metric-unit">건</span></div>
+                </div>
+                <div class="pj-metric" style="background:rgba(63,185,80,0.05);border:1px solid rgba(63,185,80,0.2);">
+                  <div class="pj-metric-label">DB 적재 완료</div>
+                  <div><span class="pj-metric-val green">2,009</span><span class="pj-metric-unit">건</span></div>
+                </div>
+                <div class="pj-metric" style="background:rgba(88,166,255,0.05);border:1px solid rgba(88,166,255,0.2);">
+                  <div class="pj-metric-label">구성 VM 수</div>
+                  <div><span class="pj-metric-val" style="color:#58a6ff;">10</span><span class="pj-metric-unit">대</span></div>
+                </div>
+              </div>
+
+              <div style="margin-top:4px;">
+                <div class="pj-section-label">// 구축 내용</div>
+                <div class="pj-toggle-item" onclick="toggleDetail(this)">
+                  <div class="pj-toggle-row"><span class="pj-arrow blue">▸</span><span>Suricata IDS 침입탐지 시스템 구축</span></div>
+                  <ul class="pj-detail-list" style="display:none;">
+                    <li>ARM64 Ubuntu 20.04에서 apt 설치 불가 → 소스 컴파일(6.0.13)로 해결</li>
+                    <li>66,733개 룰 로드 → SCAN 관련 654개로 최적화</li>
+                    <li>eve.json 기반 실시간 트래픽 탐지 · alert 생성</li>
+                    <li>Kali nmap 포트스캔 · DVWA 취약점 공격 탐지 확인</li>
+                  </ul>
+                </div>
+                <div class="pj-toggle-item" onclick="toggleDetail(this)">
+                  <div class="pj-toggle-row"><span class="pj-arrow blue">▸</span><span>ELK Stack SIEM 구축 및 Kibana 대시보드 시각화</span></div>
+                  <ul class="pj-detail-list" style="display:none;">
+                    <li>Elasticsearch 7.17.29 + Kibana + Logstash 설치 및 설정</li>
+                    <li>Filebeat로 Suricata 로그 실시간 수집 → Logstash 파싱 · 변환</li>
+                    <li>Elasticsearch suricata-* 인덱스 적재 → Kibana Discover 시각화</li>
+                    <li>시간대별 탐지 건수 막대그래프 대시보드 생성</li>
+                  </ul>
+                </div>
+                <div class="pj-toggle-item" onclick="toggleDetail(this)">
+                  <div class="pj-toggle-row"><span class="pj-arrow blue">▸</span><span>Kali Linux 모의해킹 시나리오 실습</span></div>
+                  <ul class="pj-detail-list" style="display:none;">
+                    <li>nmap SYN 스캔으로 내부 서버 포트 스캔 → Suricata 탐지 확인</li>
+                    <li>nikto로 DVWA 웹 취약점 자동 스캔</li>
+                    <li>DVWA SQL Injection · XSS · File Upload 취약점 실습</li>
+                    <li>공격 → 탐지 → DB 적재 → Kibana 시각화 전체 사이클 검증</li>
+                  </ul>
+                </div>
+                <div class="pj-toggle-item" onclick="toggleDetail(this)">
+                  <div class="pj-toggle-row"><span class="pj-arrow blue">▸</span><span>3-Tier 웹 서비스 및 보안 인프라 구성</span></div>
+                  <ul class="pj-detail-list" style="display:none;">
+                    <li>Bastion Host SSH 키 기반 인증 · ProxyJump 설정</li>
+                    <li>OpenVPN PKI 인증서 기반 VPN 서버 구축</li>
+                    <li>Nginx HTTPS 리버스 프록시 · Self-signed SSL 인증서</li>
+                    <li>DVWA 취약 웹앱 배포 (Apache + PHP + MariaDB)</li>
+                    <li>Jenkins CI/CD 파이프라인 · 포트폴리오 Nginx 정적 서버</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div style="margin-top:24px;">
+                <div class="pj-section-label">// 회고</div>
+                <p class="pj-retrospect">단순한 설치 실습을 넘어 <span style="color:#c9d1d9;">공격-탐지-분석의 전체 흐름</span>을 직접 구현했습니다. ARM64 환경에서 패키지 설치 불가 문제를 소스 컴파일로 해결하고, 파이프라인 연동 오류를 하나씩 디버깅하면서 실무에서 마주치는 문제 해결 능력을 키웠습니다. 클라우드 인프라 경험 위에 보안 레이어를 직접 쌓으며 <span style="color:#c9d1d9;">DevSecOps 관점</span>의 시각을 갖추게 되었습니다.</p>
+              </div>
+
+              <div class="pj-links">
+                <a href="https://github.com/mojodori" target="_blank" rel="noopener noreferrer" class="pj-link blue">💻 GitHub</a>
+                <a href="https://gifted-elderberry-5d6.notion.site/VMware-Fusion-13-Suricata-IDS-ELK-SIEM-DVWA-Kali-Linux-38e30b8e046380af8058f962d6c45528" target="_blank" rel="noopener noreferrer" class="pj-link blue">📓 Notion</a>
+              </div>
+            </div>
+          </div>
+
+
+        </p>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         PERFORMANCE METRICS — #performance-metrics
+         역할: 학력 · 자격증 · 교육 이력을 카테고리별 리스트로 제시
+         채용 담당자가 스펙을 빠르게 스캔하는 구역
+         ============================================================ -->
+    <section id="performance-metrics" class="section">
+      <div class="wrapper">
+        <p class="section-label fade-in">Credentials</p>
+        <h2 class="section-heading fade-in fade-delay-1">성과 &amp; 이력</h2>
+        <div class="metrics-grid fade-in fade-delay-2">
+
+          <!-- 자격증 -->
+          <div class="metrics-group">
+            <p class="metrics-group-title">자격증</p>
+            <ul class="metrics-list">
+              <li>
+                <span><!-- dot --></span>
+                <span>네트워크관리사 2급<br><small style="color:var(--color-muted)">한국정보통신자격협회 · 2024.07.02</small></span>
+                <span class="badge-active">취득</span>
+              </li>
+              <li>
+                <span><!-- dot --></span>
+                <span>리눅스마스터 2급<br><small style="color:var(--color-muted)">한국정보통신인력개발센터 · 2024.03.29</small></span>
+                <span class="badge-active">취득</span>
+              </li>
+              <li>
+                <span><!-- dot --></span>
+                <span>정보처리기사 — 필기 합격<br><small style="color:var(--color-muted)">한국산업인력공단 · 2024.03.13</small></span>
+                <span class="badge-progress">실기 준비중</span>
+              </li>
+              <li>
+                <span><!-- dot --></span>
+                <span>운전면허 2종 보통</span>
+                <span class="badge-active">취득</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- 학력 -->
+          <div class="metrics-group">
+            <p class="metrics-group-title">학력</p>
+            <ul class="metrics-list">
+              <li>
+                <span><!-- dot --></span>
+                <span>고려대학교 세종캠퍼스<br>문화ICT융합학과 (이중전공: 중국학부)<br><small style="color:var(--color-muted)">2019.03 ~ 2024.02 · 학점 3.8 / 4.5</small></span>
+                <span class="meta">학사</span>
+              </li>
+              <li>
+                <span><!-- dot --></span>
+                <span>한국폴리텍대학 강서캠퍼스<br>사이버보안과 졸업 예정<br><small style="color:var(--color-muted)">2027년 졸업 예정</small></span>
+                <span class="meta">전문학사</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- 교육 이력 -->
+          <div class="metrics-group">
+            <p class="metrics-group-title">교육 이력</p>
+            <ul class="metrics-list">
+              <li>
+                <span><!-- dot --></span>
+                <span>클라우드 엔지니어 양성과정<br>
+                  <small style="color:var(--color-muted)">한가람IT학원 (세종) · 국비지원 · 2023.11 ~ 2024.05</small><br>
+                  <small style="color:var(--color-muted-2)">Linux · Python · AWS · Docker · Kubernetes · Ansible · Terraform · CI/CD</small>
+                </span>
+                <span class="badge-active">수료</span>
+              </li>
+            </ul>
+          </div>
+
+        </div><!-- /.metrics-grid -->
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         ABOUT — #about
+         역할: 비전공자 → 보안 인재로 이어지는 스토리 타임라인
+         차별화 포인트. 채용 담당자 기억에 남는 구역
+         ============================================================ -->
+    <section id="about" class="section">
+      <div class="wrapper">
+        <p class="section-label fade-in">Story</p>
+        <h2 class="section-heading fade-in fade-delay-1">저는 이런 사람이에요</h2>
+        <div class="about-layout fade-in fade-delay-2">
+          <div class="about-desc">
+            <p>
+              처음에는 클라우드 엔지니어가 되고 싶었습니다. 국비 교육을 통해 AWS 인프라를 구축하고,
+              팀 프로젝트로 웹 서비스를 배포하면서 한 가지를 깨달았습니다.
+            </p>
+            <p>
+              <strong>네트워크와 서버를 만드는 것만으로는 충분하지 않다.</strong>
+              보안이 설정되지 않은 인프라는 언제든 무너질 수 있다는 것을요.
+            </p>
+            <p>
+              그 경험이 계기가 되어 한국폴리텍대학 사이버보안과에 진학했습니다.
+              클라우드를 알고 보안을 배운 엔지니어로서,
+              인프라 전체를 보는 시각으로 보안을 접근합니다.
+            </p>
+          </div>
+
+          <div class="timeline">
+            <div class="timeline-item">
+              <span class="timeline-year">2019</span>
+              <div class="timeline-content">
+                <p class="timeline-event">고려대학교 세종캠퍼스 입학</p>
+                <p class="timeline-sub">문화ICT융합학과 · 이중전공: 중국학부</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <span class="timeline-year">2024</span>
+              <div class="timeline-content">
+                <p class="timeline-event">고려대학교 졸업</p>
+                <p class="timeline-sub">학점 3.8 / 4.5 · 2024.02</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <span class="timeline-year">2024</span>
+              <div class="timeline-content">
+                <p class="timeline-event">클라우드 엔지니어 양성과정 수료</p>
+                <p class="timeline-sub">한가람IT학원 · 2023.11 ~ 2024.05</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <span class="timeline-year">2024</span>
+              <div class="timeline-content">
+                <p class="timeline-event">보안으로 전환 결심</p>
+                <p class="timeline-sub">GYMFIT 프로젝트 중 보안의 필요성 체감</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <span class="timeline-year">2027</span>
+              <div class="timeline-content">
+                <p class="timeline-event">한국폴리텍대학 강서캠퍼스 졸업 예정</p>
+                <p class="timeline-sub">사이버보안과 · 전문학사</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <span class="timeline-year">NOW</span>
+              <div class="timeline-content">
+                <p class="timeline-event">정보처리기사 취득 준비중</p>
+                <p class="timeline-sub">필기 합격 · 실기 준비중</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         CONTACT — #contact
+         역할: 연락 전환 유도 CTA. 이메일 복사 버튼 + 외부 프로필 링크
+         ============================================================ -->
+    <section id="contact" class="section">
+      <div class="wrapper">
+        <p class="section-label fade-in">Contact</p>
+        <h2 class="section-heading fade-in fade-delay-1">함께 이야기 나눠요 👋</h2>
+        <div class="contact-grid fade-in fade-delay-2">
+          <button
+            class="contact-item"
+            id="copy-email-btn"
+            onclick="copyEmail()"
+            title="클릭하면 이메일이 복사됩니다"
+            style="cursor:pointer;"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            ssalgaga@naver.com
+            <span style="font-size:10px; color:var(--color-muted-2); margin-left:4px;">(클릭하여 복사)</span>
+          </button>
+          <a href="tel:01058331306" class="contact-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.56 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.09 6.09l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            010-5833-1306
+          </a>
+          <a href="https://ssalgaga.tistory.com" target="_blank" rel="noopener noreferrer" class="contact-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            ssalgaga.tistory.com
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ============================================================
+       FOOTER — #footer
+       역할: 저작권 표기 + 맨 위로 스크롤 버튼
+       ============================================================ -->
+  <footer id="footer">
+    <div class="wrapper">
+      <p class="footer-copy">© 2026 최시은. All rights reserved.</p>
+      <a href="#hero" class="footer-top">↑ Back to top</a>
+    </div>
+  </footer>
+
+  <!-- 이메일 복사 토스트 -->
+  <div class="copy-toast" id="copy-toast">✓ 이메일이 복사되었습니다</div>
+
+  <script>
+    /* ============================================================
+       1. 햄버거 메뉴
+       ============================================================ */
+    const hamburger = document.getElementById('nav-hamburger');
+    const navLinks  = document.getElementById('nav-links');
+
+    hamburger.addEventListener('click', () => {
+      const isOpen = hamburger.classList.toggle('is-open');
+      navLinks.classList.toggle('is-open', isOpen);
+      hamburger.setAttribute('aria-expanded', isOpen);
+      // 메뉴 열릴 때 스크롤 잠금
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+
+    // 링크 클릭 시 메뉴 닫기
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('is-open');
+        navLinks.classList.remove('is-open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      });
+    });
+
+    /* ============================================================
+       2. 스크롤 페이드인 — Intersection Observer
+       ============================================================ */
+    const fadeEls = document.querySelectorAll('.fade-in');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target); // 한 번만 실행
+        }
+      });
+    }, { threshold: 0.12 });
+
+    fadeEls.forEach(el => observer.observe(el));
+
+    // Hero는 페이지 로드 시 바로 표시
+    window.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('#hero .fade-in').forEach(el => {
+        el.classList.add('is-visible');
+      });
+    });
+
+    /* ============================================================
+       4. 프로젝트 카드 토글
+       ============================================================ */
+    function togglePj(bodyId, btn, color) {
+      const body = document.getElementById(bodyId);
+      const isOpen = body.style.display === 'block';
+      body.style.display = isOpen ? 'none' : 'block';
+      const spans = btn.querySelectorAll('span');
+      if (isOpen) {
+        spans[0].textContent = spans[0].textContent.replace('▾ 상세 내용 접기', '▸ ' + btn.dataset.label);
+        spans[1].textContent = '+';
+      } else {
+        btn.dataset.label = spans[0].textContent.replace('▸ ', '');
+        spans[0].textContent = '▾ 상세 내용 접기';
+        spans[1].textContent = '–';
+        // 파이프라인 애니메이션 시작
+        if (bodyId === 'gymfit-body') startPipeline();
+      }
+    }
+
+    function toggleDetail(el) {
+      const list = el.querySelector('.pj-detail-list, .pj-detail-text');
+      const arrow = el.querySelector('.pj-arrow');
+      if (!list) return;
+      const isOpen = list.style.display !== 'none';
+      list.style.display = isOpen ? 'none' : (list.tagName === 'UL' ? 'block' : 'block');
+      if (arrow) arrow.textContent = isOpen ? '▸' : '▾';
+    }
+
+    /* ============================================================
+       5. GYMFIT 파이프라인 애니메이션
+       ============================================================ */
+    let pipelineInterval = null;
+
+    function startPipeline() {
+      if (pipelineInterval) return;
+      const steps = document.querySelectorAll('#gymfit-pipeline .pj-pipe-step');
+      let idx = 0;
+      steps.forEach(s => s.classList.remove('active'));
+      pipelineInterval = setInterval(() => {
+        steps.forEach(s => s.classList.remove('active'));
+        steps[idx].classList.add('active');
+        idx = (idx + 1) % steps.length;
+      }, 1100);
+    }
+    function copyEmail() {
+      const email = 'ssalgaga@naver.com';
+      const toast = document.getElementById('copy-toast');
+
+      navigator.clipboard.writeText(email).then(() => {
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2200);
+      }).catch(() => {
+        // 구형 브라우저 fallback
+        const ta = document.createElement('textarea');
+        ta.value = email;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2200);
+      });
+    }
+  </script>
+</body>
+</html>
