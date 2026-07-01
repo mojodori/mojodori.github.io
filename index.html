@@ -1860,6 +1860,100 @@
               </div>
 
               <div style="margin-top:24px;">
+                <div class="pj-section-label">// DB 계정 권한 & 방화벽 규칙 상세</div>
+                <p style="font-size:13px;color:#8b949e;margin-bottom:16px;line-height:1.6;">계정·트래픽 모두 "필요한 만큼만, 명시적으로" 허용하고 나머지는 기본 차단합니다. 아래는 실제 적용한 정책 전문입니다.</p>
+
+                <div class="pj-toggle-item" onclick="toggleDetail(this)">
+                  <div class="pj-toggle-row"><span class="pj-arrow green">▸</span><span>DB 계정 권한 — wasuser · logstash 분리 (SQL 전문)</span></div>
+                  <ul class="pj-detail-list" style="display:none;">
+                    <li><b style="color:#3fb950;">wasuser</b> — WAS 전용 계정, homelab_db 전체 권한</li>
+                    <li style="list-style:none;margin:4px 0 8px 0;">
+                      <code style="display:block;background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:10px 14px;font-size:12px;color:#e3b341;line-height:1.8;font-family:monospace;">
+                        CREATE USER 'wasuser'@'172.16.60.134' IDENTIFIED BY 'SecureDBPass!';<br>
+                        GRANT ALL PRIVILEGES ON homelab_db.* TO 'wasuser'@'172.16.60.134';
+                      </code>
+                    </li>
+                    <li><b style="color:#d2a8ff;">logstash</b> — SIEM 전용 계정, alerts 테이블 INSERT만</li>
+                    <li style="list-style:none;margin:4px 0 8px 0;">
+                      <code style="display:block;background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:10px 14px;font-size:12px;color:#e3b341;line-height:1.8;font-family:monospace;">
+                        CREATE USER 'logstash'@'172.16.60.136' IDENTIFIED BY 'LogstashPass!';<br>
+                        GRANT INSERT ON homelab_db.alerts TO 'logstash'@'172.16.60.136';
+                      </code>
+                    </li>
+                    <li><b style="color:#c9d1d9;">설계 포인트 ①</b> — %(전체) 대신 실제 IP 명시 → 다른 IP에서는 접속 자체 불가</li>
+                    <li><b style="color:#c9d1d9;">설계 포인트 ②</b> — SIEM이 뚫려도 logstash 계정은 INSERT만 가능 → 기존 alert 조회·수정·삭제 불가, 피해 범위 한정</li>
+                  </ul>
+                </div>
+
+                <div class="pj-toggle-item" onclick="toggleDetail(this)">
+                  <div class="pj-toggle-row"><span class="pj-arrow green">▸</span><span>방화벽 규칙 — UFW 화이트리스트 전문</span></div>
+                  <ul class="pj-detail-list" style="display:none;">
+                    <li><b style="color:#56d364;">Bastion</b> — 단일 진입점, 22번만 개방</li>
+                    <li style="list-style:none;margin:4px 0 8px 0;">
+                      <code style="display:block;background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:10px 14px;font-size:12px;color:#56d364;line-height:1.8;font-family:monospace;">
+                        sudo ufw allow 22/tcp<br>sudo ufw enable
+                      </code>
+                    </li>
+                    <li><b style="color:#58a6ff;">WEB</b> — 외부 트래픽 진입점, 80/443만 개방</li>
+                    <li style="list-style:none;margin:4px 0 8px 0;">
+                      <code style="display:block;background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:10px 14px;font-size:12px;color:#56d364;line-height:1.8;font-family:monospace;">
+                        sudo ufw allow 80/tcp<br>sudo ufw allow 443/tcp<br>sudo ufw enable
+                      </code>
+                    </li>
+                    <li><b style="color:#3fb950;">DB</b> — 출발지 IP를 명시해서 3306만 허용 (포트만 여는 것과 다름)</li>
+                    <li style="list-style:none;margin:4px 0 8px 0;">
+                      <code style="display:block;background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:10px 14px;font-size:12px;color:#56d364;line-height:1.8;font-family:monospace;">
+                        sudo ufw allow from 172.16.60.134 to any port 3306&nbsp;&nbsp;# WAS에서만<br>
+                        sudo ufw allow from 172.16.60.136 to any port 3306&nbsp;&nbsp;# SIEM에서만<br>
+                        sudo ufw enable
+                      </code>
+                    </li>
+                    <li><b style="color:#d2a8ff;">SIEM</b> — Filebeat 수신용 5044번만 개방</li>
+                    <li style="list-style:none;margin:4px 0 8px 0;">
+                      <code style="display:block;background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:10px 14px;font-size:12px;color:#56d364;font-family:monospace;">
+                        sudo ufw allow 5044/tcp
+                      </code>
+                    </li>
+                    <li style="color:#8b949e;font-size:12px;margin-top:8px;">핵심: <code style="color:#ffa657;font-size:11px;">ufw allow 3306</code>처럼 포트만 여는 게 아니라 <code style="color:#ffa657;font-size:11px;">from &lt;IP&gt;</code>로 출발지까지 제한 — 같은 NAT 대역 안의 다른 서버도 명시되지 않으면 DB 접근 불가</li>
+                  </ul>
+                </div>
+
+                <div style="background:#0d1117;border:1px solid #21262d;border-radius:8px;padding:14px 16px;margin-top:12px;">
+                  <table style="width:100%;border-collapse:collapse;font-size:12px;">
+                    <thead>
+                      <tr style="border-bottom:1px solid #30363d;">
+                        <th style="text-align:left;padding:6px 8px;color:#8b949e;">서버</th>
+                        <th style="text-align:left;padding:6px 8px;color:#8b949e;">열린 포트</th>
+                        <th style="text-align:left;padding:6px 8px;color:#8b949e;">허용 대상</th>
+                      </tr>
+                    </thead>
+                    <tbody style="color:#c9d1d9;">
+                      <tr style="border-bottom:1px solid #161b22;">
+                        <td style="padding:6px 8px;font-family:monospace;color:#56d364;">Bastion</td>
+                        <td style="padding:6px 8px;font-family:monospace;">22</td>
+                        <td style="padding:6px 8px;">전체 (단일 진입점)</td>
+                      </tr>
+                      <tr style="border-bottom:1px solid #161b22;">
+                        <td style="padding:6px 8px;font-family:monospace;color:#58a6ff;">WEB</td>
+                        <td style="padding:6px 8px;font-family:monospace;">80, 443</td>
+                        <td style="padding:6px 8px;">전체 (외부 트래픽 진입점)</td>
+                      </tr>
+                      <tr style="border-bottom:1px solid #161b22;">
+                        <td style="padding:6px 8px;font-family:monospace;color:#3fb950;">DB</td>
+                        <td style="padding:6px 8px;font-family:monospace;">3306</td>
+                        <td style="padding:6px 8px;">WAS(172.16.60.134) · SIEM(172.16.60.136) — IP 명시</td>
+                      </tr>
+                      <tr>
+                        <td style="padding:6px 8px;font-family:monospace;color:#d2a8ff;">SIEM</td>
+                        <td style="padding:6px 8px;font-family:monospace;">5044</td>
+                        <td style="padding:6px 8px;">suricata VM의 Filebeat 트래픽</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div style="margin-top:24px;">
                 <div class="pj-section-label">// 향후 계획 — VLAN/DMZ 분리 설계 (예정)</div>
                 <p style="font-size:13px;color:#8b949e;margin-bottom:14px;line-height:1.6;">GNS3 + OPNsense(ARM 빌드) 또는 별도 x86 환경 확보 시 아래와 같이 물리적 네트워크 분리를 구현할 계획입니다.</p>
 
