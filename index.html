@@ -738,6 +738,7 @@
     .pj-tag.green { background: rgba(63,185,80,0.12); color: #3fb950; border: 1px solid rgba(63,185,80,0.3); }
     .pj-tag.orange { background: rgba(255,153,0,0.12); color: #FF9900; border: 1px solid rgba(255,153,0,0.3); }
     .pj-tag.blue { background: rgba(88,166,255,0.12); color: #58a6ff; border: 1px solid rgba(88,166,255,0.3); }
+    .pj-tag.purple { background: rgba(188,140,255,0.12); color: #BC8CFF; border: 1px solid rgba(188,140,255,0.3); }
 
     .pj-toggle {
       width: 100%;
@@ -853,6 +854,7 @@
     .pj-arrow.green { color: #3fb950; }
     .pj-arrow.orange { color: #FF9900; }
     .pj-arrow.blue { color: #58a6ff; }
+    .pj-arrow.purple { color: #BC8CFF; }
 
     .pj-detail-list {
       margin: 8px 0 0 16px;
@@ -1331,6 +1333,19 @@
               </div>
 
               <div style="margin-top:24px;">
+                <div class="pj-section-label">// 트러블슈팅</div>
+                <div class="pj-toggle-item" onclick="toggleDetail(this)">
+                  <div class="pj-toggle-row"><span class="pj-arrow green">▸</span><span>개발팀과 배포 일정 불일치</span></div>
+                  <ul class="pj-detail-list" style="display:none;">
+                    <li><b style="color:#c9d1d9;">문제:</b> 개발팀 코드 완성 시점과 인프라 배포 일정이 맞지 않아 배포가 지연되거나, 인프라 환경과 코드가 호환되지 않는 문제가 반복됨</li>
+                    <li><b style="color:#c9d1d9;">원인:</b> 개발팀과 인프라팀의 작업 시간이 달랐고, 오프라인 미팅이 어려운 환경이라 실시간 소통이 부족했음</li>
+                    <li><b style="color:#3fb950;">해결:</b> 슬랙으로 실시간 소통 채널 구축 + 인프라팀 내부 하루 두 번 스탠드업 미팅으로 일정 지속 동기화. 전체 일정 재조정 회의를 거쳐 개발-배포 사이클을 명확히 정의한 이후 일정 충돌 감소</li>
+                    <li>이 경험으로 사전 일정 계획과 지속적인 소통의 중요성을 체감</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div style="margin-top:24px;">
                 <div class="pj-section-label">// 회고</div>
                 <p class="pj-retrospect">약 5주간 Java 개발팀과 실무 협업 구조로 진행한 프로젝트로, <span style="color:#c9d1d9;">사전 일정 계획의 중요성</span>을 체감했습니다. K6 성능 테스트를 통해 감이 아닌 <span style="color:#c9d1d9;">데이터 기반으로 인프라를 결정</span>하는 경험을 쌓았고, Terraform으로 인프라를 코드화하며 재현성과 협업 효율을 높이는 IaC의 실질적인 가치를 직접 확인할 수 있었습니다.</p>
               </div>
@@ -1349,7 +1364,7 @@
                 <span class="pj-meta">2026.06 – 진행중 · 개인 프로젝트 · macOS M2 · VMware Fusion 13</span>
               </div>
               <h3 class="pj-title">VMware 기반 보안 홈랩 구축<br><span style="color:#58a6ff;">침입탐지 · SIEM · 모의해킹 통합 환경</span></h3>
-              <p class="pj-desc">macOS M2 환경에서 VMware Fusion 13을 활용해 10대의 Ubuntu VM으로 구성된 보안 실습 홈랩 구축 — Suricata IDS 침입탐지, ELK Stack SIEM 로그 분석, DVWA 취약점 실습, Kali Linux 모의해킹 시나리오까지 공격-탐지-분석 전체 사이클 직접 구현</p>
+              <p class="pj-desc">macOS M2 환경에서 VMware Fusion 13을 활용해 9대의 Ubuntu VM으로 구성된 보안 실습 홈랩 구축 — Suricata IDS 침입탐지, ELK Stack SIEM 로그 분석, DVWA 취약점 실습, Kali Linux 모의해킹 시나리오까지 공격-탐지-분석 전체 사이클 직접 구현</p>
               <div style="margin-bottom:12px;"><span class="pj-role-badge" style="background:rgba(88,166,255,0.1);color:#58a6ff;border-color:rgba(88,166,255,0.3);">🎯 역할 · 설계 / 구축 / 운영 전담 (1인)</span></div>
               <div class="pj-tags">
                 <span class="pj-tag blue">Suricata IDS</span>
@@ -1457,7 +1472,7 @@
                 </svg>
               </div>
 
-              <div class="pj-section-label">// 홈랩 구성 (10 VM)</div>
+              <div class="pj-section-label">// 홈랩 구성 (9 VM)</div>
               <div class="pj-pipeline" id="homelab-pipeline" style="margin-bottom:20px;">
                 <div class="pj-pipe-step active" style="color:#58a6ff;border-color:rgba(88,166,255,0.4);background:rgba(88,166,255,0.07);">Bastion Host (SSH 점프서버) · 192.168.0.30</div>
                 <div class="pj-pipe-step active" style="color:#58a6ff;border-color:rgba(88,166,255,0.4);background:rgba(88,166,255,0.07);">OpenVPN · WEB(Nginx) · WAS(DVWA) · DB(MariaDB)</div>
@@ -1758,6 +1773,232 @@
             </div>
           </div>
 
+          <div class="pj-card" id="pj-ticket">
+            <div class="pj-header">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+                <span style="width:8px;height:8px;border-radius:50%;background:#BC8CFF;box-shadow:0 0 8px #BC8CFF99;display:inline-block;"></span>
+                <span class="pj-meta">2026.07 · 개인 프로젝트 · VMware Fusion · 8-VM 인프라</span>
+              </div>
+              <h3 class="pj-title">트래픽 폭증 대응 티켓 예매 서비스<br><span style="color:#BC8CFF;">동시성 제어 · 대기열 설계 · 실시간 이상탐지</span></h3>
+              <p class="pj-desc">콘서트·스포츠 티켓 예매처럼 순간적으로 트래픽이 폭증하는 서비스를 가정하고, 좌석 동시성 제어(Redis 원자연산)·대기열(Rate limiting)·DB 읽기/쓰기 분리·실시간 이상탐지(Suricata)를 설계부터 구현, K6 부하테스트와 자체 모의해킹(nmap/Nikto)으로 직접 검증까지 완료한 인프라 프로젝트</p>
+              <div style="margin-bottom:12px;"><span class="pj-role-badge">🎯 핵심 성과 · 동시성 100건 검증 · 대기열 효과 실측 · IDS 실전 탐지 성공</span></div>
+              <div class="pj-tags">
+                <span class="pj-tag purple">VMware Fusion</span><span class="pj-tag purple">Nginx</span><span class="pj-tag purple">Node.js</span><span class="pj-tag purple">Redis</span><span class="pj-tag purple">MariaDB Replication</span><span class="pj-tag purple">Suricata</span><span class="pj-tag purple">K6</span><span class="pj-tag purple">nmap</span><span class="pj-tag purple">Nikto</span><span class="pj-tag purple">ufw</span>
+              </div>
+            </div>
+            <button class="pj-toggle" onclick="togglePj('ticket-body', this, '#BC8CFF')">
+              <span>▸ 아키텍처 및 검증 결과 보기</span><span style="color:#BC8CFF;">+</span>
+            </button>
+            <div id="ticket-body" class="pj-body" style="display:none;">
+
+              <div class="pj-section-label">// 인프라 구성도 · 172.16.60.0/24</div>
+              <div style="background:#0d1117;border:1px solid #21262d;border-radius:10px;padding:20px;margin-bottom:20px;overflow-x:auto;">
+                <svg viewBox="0 0 780 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:780px;min-width:580px;display:block;margin:0 auto;">
+                  <defs>
+                    <marker id="tarrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                      <path d="M0,0 L0,6 L8,3 z" fill="#BC8CFF"/>
+                    </marker>
+                    <marker id="tarrow-teal" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                      <path d="M0,0 L0,6 L8,3 z" fill="#3fb950"/>
+                    </marker>
+                  </defs>
+                  <text x="390" y="20" fill="#8b949e" font-family="monospace" font-size="10" text-anchor="middle">사용자 트래픽 → 대기열 → 로드밸런서 → API → 데이터 계층</text>
+
+                  <rect x="20" y="40" width="110" height="42" rx="6" fill="#161b22" stroke="#3fb950"/>
+                  <text x="75" y="58" fill="#e6edf3" font-family="monospace" font-size="10" text-anchor="middle">Browser</text>
+                  <text x="75" y="71" fill="#8b949e" font-family="monospace" font-size="8" text-anchor="middle">사용자</text>
+
+                  <line x1="130" y1="61" x2="175" y2="61" stroke="#3fb950" stroke-width="1.5" marker-end="url(#tarrow-teal)"/>
+
+                  <rect x="178" y="40" width="120" height="42" rx="6" fill="#161b22" stroke="#3fb950"/>
+                  <text x="238" y="58" fill="#e6edf3" font-family="monospace" font-size="10" text-anchor="middle">queue-gate</text>
+                  <text x="238" y="71" fill="#8b949e" font-family="monospace" font-size="8" text-anchor="middle">.146 +Suricata</text>
+
+                  <line x1="298" y1="61" x2="343" y2="61" stroke="#3fb950" stroke-width="1.5" marker-end="url(#tarrow-teal)"/>
+
+                  <rect x="346" y="40" width="110" height="42" rx="6" fill="#161b22" stroke="#58a6ff"/>
+                  <text x="401" y="58" fill="#e6edf3" font-family="monospace" font-size="10" text-anchor="middle">web-lb</text>
+                  <text x="401" y="71" fill="#8b949e" font-family="monospace" font-size="8" text-anchor="middle">.147 least_conn</text>
+
+                  <line x1="401" y1="82" x2="401" y2="120" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#tarrow)"/>
+
+                  <rect x="300" y="123" width="100" height="40" rx="6" fill="#161b22" stroke="#58a6ff"/>
+                  <text x="350" y="140" fill="#e6edf3" font-family="monospace" font-size="10" text-anchor="middle">was-01</text>
+                  <text x="350" y="152" fill="#8b949e" font-family="monospace" font-size="8" text-anchor="middle">.145</text>
+
+                  <rect x="410" y="123" width="100" height="40" rx="6" fill="#161b22" stroke="#58a6ff"/>
+                  <text x="460" y="140" fill="#e6edf3" font-family="monospace" font-size="10" text-anchor="middle">was-02</text>
+                  <text x="460" y="152" fill="#8b949e" font-family="monospace" font-size="8" text-anchor="middle">.151</text>
+
+                  <line x1="350" y1="163" x2="200" y2="200" stroke="#BC8CFF" stroke-width="1.5" marker-end="url(#tarrow)"/>
+                  <line x1="460" y1="163" x2="590" y2="200" stroke="#BC8CFF" stroke-width="1.5" marker-end="url(#tarrow)"/>
+
+                  <rect x="130" y="203" width="120" height="42" rx="6" fill="#161b22" stroke="#BC8CFF"/>
+                  <text x="190" y="221" fill="#e6edf3" font-family="monospace" font-size="10" text-anchor="middle">redis</text>
+                  <text x="190" y="234" fill="#8b949e" font-family="monospace" font-size="8" text-anchor="middle">.144 SETNX 원자연산</text>
+
+                  <rect x="530" y="203" width="130" height="42" rx="6" fill="#161b22" stroke="#BC8CFF"/>
+                  <text x="595" y="221" fill="#e6edf3" font-family="monospace" font-size="10" text-anchor="middle">db-01 → replica</text>
+                  <text x="595" y="234" fill="#8b949e" font-family="monospace" font-size="8" text-anchor="middle">.143 → .148 실시간 복제</text>
+
+                  <rect x="660" y="40" width="100" height="42" rx="6" fill="#161b22" stroke="#f0883e"/>
+                  <text x="710" y="58" fill="#e6edf3" font-family="monospace" font-size="10" text-anchor="middle">bastion</text>
+                  <text x="710" y="71" fill="#8b949e" font-family="monospace" font-size="8" text-anchor="middle">.142 SSH 전용</text>
+                </svg>
+              </div>
+
+              <div class="pj-section-label">// 주요 성과 (수치)</div>
+              <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;">
+                <div class="pj-metric" style="background:rgba(188,140,255,0.05);border:1px solid rgba(188,140,255,0.2);">
+                  <div class="pj-metric-label">좌석 중복예약 발생률</div>
+                  <div><span class="pj-metric-val" style="color:#BC8CFF;">0</span><span class="pj-metric-unit">% (100건×3회)</span></div>
+                </div>
+                <div class="pj-metric" style="background:rgba(63,185,80,0.05);border:1px solid rgba(63,185,80,0.2);">
+                  <div class="pj-metric-label">최대 응답지연 개선</div>
+                  <div><span class="pj-metric-val green">99.8</span><span class="pj-metric-unit">% ↓ (60,000→108.8ms)</span></div>
+                </div>
+                <div class="pj-metric" style="background:rgba(88,166,255,0.05);border:1px solid rgba(88,166,255,0.2);">
+                  <div class="pj-metric-label">무응답 요청률</div>
+                  <div><span class="pj-metric-val" style="color:#58a6ff;">1.27→0</span><span class="pj-metric-unit">%</span></div>
+                </div>
+                <div class="pj-metric" style="background:rgba(255,153,0,0.05);border:1px solid rgba(255,153,0,0.2);">
+                  <div class="pj-metric-label">처리량 증가</div>
+                  <div><span class="pj-metric-val" style="color:#FF9900;">9.4</span><span class="pj-metric-unit">배 (대기열 적용)</span></div>
+                </div>
+                <div class="pj-metric" style="background:rgba(63,185,80,0.05);border:1px solid rgba(63,185,80,0.2);">
+                  <div class="pj-metric-label">DB 복제 지연</div>
+                  <div><span class="pj-metric-val green">0</span><span class="pj-metric-unit">초 (실시간)</span></div>
+                </div>
+                <div class="pj-metric" style="background:rgba(188,140,255,0.05);border:1px solid rgba(188,140,255,0.2);">
+                  <div class="pj-metric-label">외부 스캔 노출 포트</div>
+                  <div><span class="pj-metric-val" style="color:#BC8CFF;">0</span><span class="pj-metric-unit">개 (내부서버 전체 filtered)</span></div>
+                </div>
+              </div>
+
+              <div class="pj-section-label">// 설계 의도 — 왜 이렇게 구성했는가</div>
+              <p style="font-size:13px;color:#8b949e;margin-bottom:16px;line-height:1.6;">각 구성 요소는 "그냥 흔히 쓰니까"가 아니라, 실제로 겪은 문제와 대안 비교를 거쳐 선택했습니다.</p>
+
+              <div class="pj-toggle-item" onclick="toggleDetail(this)">
+                <div class="pj-toggle-row"><span class="pj-arrow purple">▸</span><span>왜 Bastion을 통해서만 접근하게 했는가</span></div>
+                <ul class="pj-detail-list" style="display:none;">
+                  <li><b style="color:#c9d1d9;">대안:</b> 각 서버에 SSH를 직접 노출</li>
+                  <li><b style="color:#BC8CFF;">이유:</b> 진입점을 하나로 좁히면 공격 표면이 줄고 접근 기록을 한 곳에서 감사할 수 있음. 실제 nmap 스캔에서 was-01·web-lb가 외부(맥북) 기준 전 포트 filtered로 관측되어 검증됨</li>
+                </ul>
+              </div>
+
+              <div class="pj-toggle-item" onclick="toggleDetail(this)">
+                <div class="pj-toggle-row"><span class="pj-arrow purple">▸</span><span>왜 DB 트랜잭션 락 대신 Redis 원자연산을 썼는가</span></div>
+                <ul class="pj-detail-list" style="display:none;">
+                  <li><b style="color:#c9d1d9;">대안:</b> DB 트랜잭션 + 행 잠금(SELECT FOR UPDATE)</li>
+                  <li><b style="color:#BC8CFF;">이유:</b> DB 락은 동시 요청이 몰릴수록 대기 큐가 길어져 응답이 느려짐. Redis는 인메모리 단일 스레드라 원자적 명령 하나로 즉시 처리 가능 — K6 100건 동시요청에서 평균 응답 30ms대를 유지하며 중복 0건 달성</li>
+                </ul>
+              </div>
+
+              <div class="pj-toggle-item" onclick="toggleDetail(this)">
+                <div class="pj-toggle-row"><span class="pj-arrow purple">▸</span><span>왜 대기열이 "느리게 처리"가 아니라 "초과분 즉시 거절" 방식인가</span></div>
+                <ul class="pj-detail-list" style="display:none;">
+                  <li><b style="color:#c9d1d9;">대안:</b> 초과 요청을 큐에 쌓아 순서대로 처리</li>
+                  <li><b style="color:#BC8CFF;">이유:</b> 큐에 쌓으면 대기 중인 연결이 계속 늘어 서버 자원이 고갈됨(실측: 대기열 없이 최대 응답 60초). 초과분을 429로 즉시 거절하면 서버는 항상 감당 가능한 용량 안에서만 일해 가용성이 유지됨</li>
+                </ul>
+              </div>
+
+              <div class="pj-toggle-item" onclick="toggleDetail(this)">
+                <div class="pj-toggle-row"><span class="pj-arrow purple">▸</span><span>왜 DB Read Replica를 뒀는가</span></div>
+                <ul class="pj-detail-list" style="display:none;">
+                  <li><b style="color:#c9d1d9;">대안:</b> DB 한 대가 조회·쓰기 모두 처리</li>
+                  <li><b style="color:#BC8CFF;">이유:</b> 티켓 오픈 시 좌석 조회 트래픽이 예약 확정(쓰기)보다 수십~수백 배 많음. 조회를 Replica로 분리하면 진짜 중요한 쓰기 트랜잭션이 조회 부하 때문에 밀리지 않음</li>
+                </ul>
+              </div>
+
+              <div class="pj-toggle-item" onclick="toggleDetail(this)">
+                <div class="pj-toggle-row"><span class="pj-arrow purple">▸</span><span>왜 Suricata를 별도 서버가 아닌 queue-gate에 설치했는가</span></div>
+                <ul class="pj-detail-list" style="display:none;">
+                  <li><b style="color:#c9d1d9;">대안:</b> 독립된 모니터링 서버에 설치(최초 계획)</li>
+                  <li><b style="color:#BC8CFF;">이유:</b> 별도 서버는 실제 패킷이 지나가지 않아 아무것도 탐지하지 못한다는 걸 직접 겪음. IDS는 반드시 트래픽 경로 위에 있어야 동작한다는 걸 실습으로 확인 후 구조를 변경</li>
+                </ul>
+              </div>
+
+              <div style="margin-top:20px;">
+              <div class="pj-section-label">// 핵심 검증 결과</div>
+              <table style="width:100%;border-collapse:collapse;margin-bottom:20px;font-size:12px;">
+                <tr style="background:#161b22;">
+                  <th style="text-align:left;padding:8px 10px;border:1px solid #21262d;color:#BC8CFF;">검증 항목</th>
+                  <th style="text-align:left;padding:8px 10px;border:1px solid #21262d;color:#BC8CFF;">결과</th>
+                </tr>
+                <tr><td style="padding:8px 10px;border:1px solid #21262d;">좌석 동시성 제어 (K6, VU 100)</td><td style="padding:8px 10px;border:1px solid #21262d;">순차·내부·외부 네트워크 3가지 조건 모두 DB에 정확히 1건만 저장</td></tr>
+                <tr><td style="padding:8px 10px;border:1px solid #21262d;">트래픽 폭증 대응 (대기열 ON/OFF)</td><td style="padding:8px 10px;border:1px solid #21262d;">최대 응답지연 60,000ms → <span style="color:#3fb950;">108.8ms</span>, 무응답 요청 1.27% → <span style="color:#3fb950;">0%</span></td></tr>
+                <tr><td style="padding:8px 10px;border:1px solid #21262d;">DB 복제 (Primary-Replica)</td><td style="padding:8px 10px;border:1px solid #21262d;">Primary INSERT가 Replica에 실시간 반영 확인 (Seconds_Behind_Master: 0)</td></tr>
+                <tr><td style="padding:8px 10px;border:1px solid #21262d;">Suricata 실시간 이상탐지</td><td style="padding:8px 10px;border:1px solid #21262d;">K6 공격 시뮬레이션 중 이상 트래픽 룰 실전 탐지 성공</td></tr>
+                <tr><td style="padding:8px 10px;border:1px solid #21262d;">자체 모의해킹 (nmap/Nikto)</td><td style="padding:8px 10px;border:1px solid #21262d;">설계한 포트 매트릭스와 실제 스캔 결과 일치, 보안헤더 3종 조치</td></tr>
+              </table>
+              </div>
+
+              <div class="pj-section-label">// 포트 스캔 및 웹 취약점 점검 (nmap · Nikto)</div>
+              <table style="width:100%;border-collapse:collapse;margin-bottom:14px;font-size:12px;">
+                <tr style="background:#161b22;">
+                  <th style="text-align:left;padding:8px 10px;border:1px solid #21262d;color:#BC8CFF;">서버</th>
+                  <th style="text-align:left;padding:8px 10px;border:1px solid #21262d;color:#BC8CFF;">22</th>
+                  <th style="text-align:left;padding:8px 10px;border:1px solid #21262d;color:#BC8CFF;">80</th>
+                  <th style="text-align:left;padding:8px 10px;border:1px solid #21262d;color:#BC8CFF;">443</th>
+                  <th style="text-align:left;padding:8px 10px;border:1px solid #21262d;color:#BC8CFF;">3000/3306/6379</th>
+                </tr>
+                <tr><td style="padding:8px 10px;border:1px solid #21262d;">queue-gate (공개 진입점)</td><td style="padding:8px 10px;border:1px solid #21262d;">filtered</td><td style="padding:8px 10px;border:1px solid #21262d;color:#3fb950;">open</td><td style="padding:8px 10px;border:1px solid #21262d;">closed</td><td style="padding:8px 10px;border:1px solid #21262d;">filtered</td></tr>
+                <tr><td style="padding:8px 10px;border:1px solid #21262d;">web-lb</td><td style="padding:8px 10px;border:1px solid #21262d;">filtered</td><td style="padding:8px 10px;border:1px solid #21262d;">filtered</td><td style="padding:8px 10px;border:1px solid #21262d;">filtered</td><td style="padding:8px 10px;border:1px solid #21262d;">filtered</td></tr>
+                <tr><td style="padding:8px 10px;border:1px solid #21262d;">was-01</td><td style="padding:8px 10px;border:1px solid #21262d;">filtered</td><td style="padding:8px 10px;border:1px solid #21262d;">filtered</td><td style="padding:8px 10px;border:1px solid #21262d;">filtered</td><td style="padding:8px 10px;border:1px solid #21262d;">filtered</td></tr>
+              </table>
+              <p style="font-size:12px;color:#8b949e;margin-bottom:8px;">외부(맥북) 관점에서 스캔한 결과, 공개 진입점(queue-gate)만 80번이 열려있고 나머지 서버는 전 포트가 filtered로 관측되어 설계한 포트 매트릭스와 실제가 일치함을 확인했습니다.</p>
+              <table style="width:100%;border-collapse:collapse;margin-bottom:20px;font-size:12px;">
+                <tr style="background:#161b22;">
+                  <th style="text-align:left;padding:8px 10px;border:1px solid #21262d;color:#BC8CFF;">Nikto 발견 항목 (queue-gate)</th>
+                  <th style="text-align:left;padding:8px 10px;border:1px solid #21262d;color:#BC8CFF;">1차</th>
+                  <th style="text-align:left;padding:8px 10px;border:1px solid #21262d;color:#BC8CFF;">조치 후</th>
+                </tr>
+                <tr><td style="padding:8px 10px;border:1px solid #21262d;">Content-Security-Policy 누락</td><td style="padding:8px 10px;border:1px solid #21262d;color:#f85149;">미적용</td><td style="padding:8px 10px;border:1px solid #21262d;color:#3fb950;">적용됨</td></tr>
+                <tr><td style="padding:8px 10px;border:1px solid #21262d;">Referrer-Policy 누락</td><td style="padding:8px 10px;border:1px solid #21262d;color:#f85149;">미적용</td><td style="padding:8px 10px;border:1px solid #21262d;color:#3fb950;">적용됨</td></tr>
+                <tr><td style="padding:8px 10px;border:1px solid #21262d;">Permissions-Policy 누락</td><td style="padding:8px 10px;border:1px solid #21262d;color:#f85149;">미적용</td><td style="padding:8px 10px;border:1px solid #21262d;color:#3fb950;">적용됨</td></tr>
+                <tr><td style="padding:8px 10px;border:1px solid #21262d;">Strict-Transport-Security 누락</td><td style="padding:8px 10px;border:1px solid #21262d;color:#f85149;">미적용</td><td style="padding:8px 10px;border:1px solid #21262d;color:#FF9900;">남은 조치</td></tr>
+                <tr><td style="padding:8px 10px;border:1px solid #21262d;">X-Content-Type-Options 누락</td><td style="padding:8px 10px;border:1px solid #21262d;color:#f85149;">미적용</td><td style="padding:8px 10px;border:1px solid #21262d;color:#FF9900;">남은 조치</td></tr>
+              </table>
+
+              <div class="pj-section-label">// 회원가입 시나리오 (설계) — 계정 정보가 DB에 저장되는 흐름</div>
+              <p style="font-size:12px;color:#8b949e;margin-bottom:10px;line-height:1.7;">
+                프론트엔드 회원가입/로그인 화면과 90일 비밀번호 만료 흐름은 데모로 구현했으며, 아래는 실제 백엔드
+                연동 시 적용할 설계입니다 (현재 API 서버는 좌석예약 로직만 연동된 상태입니다).
+              </p>
+              <ol style="font-size:12px;color:#c9d1d9;line-height:1.9;margin-bottom:12px;padding-left:20px;">
+                <li>사용자가 이메일 · 비밀번호(10자 이상) 입력</li>
+                <li>서버가 비밀번호를 <b style="color:#BC8CFF;">bcrypt(cost 12)</b>로 해시 — 원문은 저장도, 전송 로그에도 남기지 않음</li>
+                <li><code style="color:#f0883e;">members</code> 테이블에 <code style="color:#f0883e;">password_hash</code>와 <code style="color:#f0883e;">password_changed_at</code>(현재시각) 저장</li>
+                <li>로그인 시점마다 <code style="color:#f0883e;">password_changed_at</code>과 현재시각 비교, 90일 초과 시 세션 발급 대신 재설정 화면으로 전환</li>
+                <li>재설정 시 최근 비밀번호 이력(<code style="color:#f0883e;">password_history</code>)과 대조해 재사용 차단</li>
+              </ol>
+              <div style="background:#0d1117;border:1px solid #21262d;border-radius:8px;padding:12px 14px;margin-bottom:20px;">
+                <pre style="font-family:monospace;font-size:10px;color:#8b949e;white-space:pre-wrap;margin:0;">CREATE TABLE members (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  email VARCHAR(255) UNIQUE NOT NULL,
+  password_hash VARCHAR(255) NOT NULL,
+  password_changed_at DATETIME NOT NULL DEFAULT NOW(),
+  password_history JSON,
+  failed_login_count INT DEFAULT 0
+);
+
+const hash = await bcrypt.hash(password, 12);
+await db.query(
+  'INSERT INTO members (email, password_hash, password_changed_at) VALUES (?, ?, NOW())',
+  [email, hash]
+);</pre>
+              </div>
+
+              <div class="pj-section-label">// 트러블슈팅</div>
+              <ul style="font-size:12px;color:#c9d1d9;line-height:1.8;margin-bottom:20px;padding-left:18px;">
+                <li>DB 복제 연결 시 이전 계정 재생성 이력(DROP USER)이 binlog에 남아 <code style="color:#f0883e;">Slave_SQL_Running: No</code> 발생 → <code style="color:#f0883e;">sql_slave_skip_counter</code>로 해결</li>
+                <li>Suricata 최초 별도 모니터링 서버에 배치 → 실제 트래픽 경로 밖이라 탐지 불가 → 트래픽이 지나가는 queue-gate에 재설치하여 해결</li>
+                <li>Suricata 설정파일의 인터페이스명(eth0→ens160)·용량 단위(KiB→kb) 오류를 로그 분석으로 직접 수정</li>
+              </ul>
+
+              <div class="pj-retrospect">이 프로젝트는 <span style="color:#c9d1d9;">"설계했다"에서 멈추지 않고 "검증했다"까지 가는 것</span>을 목표로 했습니다. 특히 IDS를 별도 서버에 두었다가 트래픽을 전혀 탐지하지 못하는 걸 겪으면서, <span style="color:#c9d1d9;">보안 장비는 무엇을 탐지하는지보다 어디에 배치하는지가 먼저</span>라는 걸 실습으로 체감했습니다. K6로 대기열의 유무를 직접 비교하며 가용성도 CIA 3요소 중 하나로서 수치로 증명 가능하다는 것을 확인한 프로젝트입니다.</div>
+            </div>
+          </div>
 
         </div>
       </div>
